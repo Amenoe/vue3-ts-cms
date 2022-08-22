@@ -13,5 +13,9 @@ export default defineConfig({
     alias: {
       '@': resolve('src')
     }
+  },
+  base: '/dev/',
+  server: {
+    port: 8088
   }
 });
