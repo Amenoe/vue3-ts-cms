@@ -1,7 +1,21 @@
 <template>
-  <div>这里是登录页面</div>
+  <div>
+    <h2>这里是登录页面</h2>
+    <button @click="add">+1</button>
+    {{ store.count }}
+    <button @click="sub">-1</button>
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useStore } from '@/store/index';
+const store = useStore(); //返回store实例，在模板中使用
+const add = () => {
+  store.increment();
+};
+const sub = () => {
+  store.count--;
+};
+</script>
 
 <style scoped></style>
