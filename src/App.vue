@@ -14,7 +14,7 @@ import HelloWorld from './components/HelloWorld.vue';
     </a>
     <router-link to="/login"><div>登录</div></router-link>
     <router-link to="/main"><div>主页</div></router-link>
-    <router-view></router-view>
+    <router-view />
   </div>
 
   <HelloWorld msg="Vite + Vue" />

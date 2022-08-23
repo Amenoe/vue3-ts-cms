@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from '@/store/index';
+import { useStore } from '@/stores/index';
 const store = useStore(); //返回store实例，在模板中使用
 const add = () => {
   store.increment();
