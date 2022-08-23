@@ -8,7 +8,8 @@ module.exports = {
     'eslint:recommended',
     'plugin:vue/vue3-essential',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
+    './.eslintrc-auto-import.json'
   ],
   overrides: [],
   parser: 'vue-eslint-parser',
@@ -23,4 +24,4 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
     // 'vue/multi-word-component-names': 'off' //关闭组件名多字检测
   }
-};
+}

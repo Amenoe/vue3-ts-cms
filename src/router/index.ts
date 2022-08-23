@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import type { RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -15,11 +15,11 @@ const routes: RouteRecordRaw[] = [
     name: 'main',
     component: () => import('@/views/main/MainView.vue')
   }
-];
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes
-});
+})
 
-export default router;
+export default router

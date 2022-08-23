@@ -4,6 +4,6 @@
 
 //环境变量的类型提示
 interface ImportMetaEnv {
-  readonly VITE_APP_TITLE: string;
-  readonly VITE_BASE_URL: string;
+  readonly VITE_APP_TITLE: string
+  readonly VITE_BASE_URL: string
 }

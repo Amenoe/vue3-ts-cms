@@ -8,14 +8,22 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from '@/stores/index';
-const store = useStore(); //返回store实例，在模板中使用
+import { useStore } from '@/stores/index'
+const store = useStore() //返回store实例，在模板中使用
 const add = () => {
-  store.increment();
-};
+  store.increment()
+}
 const sub = () => {
-  store.count--;
-};
+  store.count--
+}
 </script>
 
-<style scoped></style>
+<style lang="less" scoped>
+@fontSize: 30px;
+@fontColor: yellow;
+
+h2 {
+  font-size: @fontSize;
+  color: @fontColor;
+}
+</style>
