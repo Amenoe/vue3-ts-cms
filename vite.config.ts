@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => {
     ],
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url)) //返回当前模块的 URL 路径
+        '@': fileURLToPath(new URL('./src', import.meta.url)) //new URL():返回当前模块的 URL 路径
       }
     },
     base: env.VITE_BASE_URL,
