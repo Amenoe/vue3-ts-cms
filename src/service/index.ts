@@ -1,21 +1,19 @@
 //service的统一出口
-import { useStore } from '@/stores'
 import Request from './request'
-const store = useStore()
 
-const rainRequest = new Request({
+const request = new Request({
   baseURL: import.meta.env.VITE_BASE_API,
   timeout: import.meta.env.VITE_TIME_OUT,
   interceptors: {
     requestInterceptor: (config) => {
-      console.log('请求成功的拦截')
+      console.log('实例请求拦截器')
       return config
     },
     responseInterceptor: (config) => {
-      console.log('响应成功的拦截')
-      return config.data
+      console.log('实例响应拦截器')
+      return config
     }
   }
 })
 
-export default rainRequest
+export default request

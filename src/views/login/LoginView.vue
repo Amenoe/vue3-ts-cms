@@ -1,43 +1,32 @@
 <template>
-  <div>
-    <h2>这里是登录页面</h2>
-    <button @click="add">+1</button>
-    {{ store.count }}
-    <button @click="sub">-1</button>
-    <button @click="getData">发送请求</button>
-  </div>
+  <div class="login"><LoginPanelVue /></div>
 </template>
 
 <script setup lang="ts">
-import { useStore } from '@/stores/index'
-import rainRequest from '@/service'
-const store = useStore() //返回store实例，在模板中使用
-const add = () => {
-  store.increment()
-}
-const sub = () => {
-  store.count--
-}
-const getData = () => {
-  rainRequest.request({
-    url: '/home/multidata',
-    method: 'GET',
-    interceptors: {
-      requestInterceptor: (config) => {
-        console.log('单独请求的config')
-        return config
-      }
-    }
-  })
-}
+/*import request from '@/service'
+import { onMounted } from 'vue'
+onMounted(() => {
+  request
+    .request({
+      url: '/home/multidata',
+      method: 'GET',
+      showLoading: true
+    })
+    .then((res) => {
+      console.log(res)
+    })
+})*/
+import LoginPanelVue from './cpns/LoginPanel.vue'
 </script>
 
 <style lang="less" scoped>
-@fontSize: 30px;
-@fontColor: yellow;
-
-h2 {
-  font-size: @fontSize;
-  color: @fontColor;
+.login {
+  width: 100%;
+  height: 100%;
+  background: url('../../assets/image/login-bg.svg');
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>

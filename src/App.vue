@@ -4,13 +4,13 @@
 </script>
 
 <template>
-  <div>
-    <router-link to="/login"><div>登录</div></router-link>
-    <router-link to="/main"><div>主页</div></router-link>
+  <div class="app">
     <router-view />
   </div>
-
-  <HelloWorld msg="RainCMS" />
 </template>
 
-<style scoped></style>
+<style scoped>
+.app {
+  height: 100%;
+}
+</style>
