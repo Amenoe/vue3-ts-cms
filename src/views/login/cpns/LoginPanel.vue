@@ -9,14 +9,17 @@
             <span>账号登录</span>
           </span>
         </template>
-        <LoginAccount ref="accountRef"></LoginAccount>
+        <LoginAccount
+          ref="accountRef"
+          :rememberPsw="rememberPsw"
+        ></LoginAccount>
       </el-tab-pane>
       <el-tab-pane>
         <template #label>
           <el-icon><i-ep-iphone /></el-icon>
           <span>手机登录</span>
         </template>
-        <LoginPhone ref="phoneRef"></LoginPhone>
+        <LoginPhone ref="phoneRef" :rememberPsw="rememberPsw"></LoginPhone>
       </el-tab-pane>
     </el-tabs>
     <div class="login-option">
@@ -45,7 +48,7 @@ const phoneRef = ref<InstanceType<typeof LoginPhone>>()
 
 //登录按钮调用子组件方法
 const handleLoginClick = () => {
-  accountRef.value?.loginAction()
+  accountRef.value?.loginAction(rememberPsw.value)
 }
 </script>
 

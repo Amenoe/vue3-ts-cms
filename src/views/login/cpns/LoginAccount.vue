@@ -12,27 +12,26 @@
         <el-input v-model="loginForm.username"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input
-          type="password"
-          v-model="loginForm.password"
-          show-password
-        ></el-input>
+        <el-input v-model="loginForm.password" show-password></el-input>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script setup lang="ts">
+import { encrypt, decrypt } from '@/utils/jsencrypt'
+import localCache from '@/utils/cache'
+
 import type { FormInstance } from 'element-plus'
-import { off } from 'process'
 
 const loginRef = ref<FormInstance>()
 
-const loginForm = reactive({
+const loginForm = ref({
   username: '',
   password: ''
 })
 
+console.log(localCache.getCache('password'))
 //自定义校验规则
 const loginRules = {
   username: [
@@ -53,14 +52,38 @@ const loginRules = {
     }
   ]
 }
-const loginAction = () => {
+const loginAction = (rememberPsw: boolean) => {
   //el-form的验证，通过返回true，不通过返回false
   loginRef.value?.validate((valid) => {
     if (valid) {
-      //为true执行登录
+      //1. 是否记住密码
+      if (rememberPsw) {
+        localCache.setCache('username', loginForm.value.username)
+        localCache.setCache('password', encrypt(loginForm.value.password))
+        localCache.setCache('rememberPsw', rememberPsw)
+      } else {
+        localCache.delCache('username')
+        localCache.delCache('password')
+        localCache.delCache('rememberPsw')
+      }
     }
   })
 }
+
+//获取localStorage的值
+const setFormValue = () => {
+  const username = localCache.getCache('username')
+  const password = localCache.getCache('password')
+  loginForm.value = {
+    username: username === undefined ? loginForm.value.username : username,
+    password:
+      password === undefined
+        ? loginForm.value.password
+        : (decrypt(password) as string)
+  }
+}
+
+setFormValue()
 
 defineExpose({
   loginAction
