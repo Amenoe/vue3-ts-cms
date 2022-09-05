@@ -59,7 +59,14 @@ export default defineConfig(({ mode }) => {
     ],
     base: env.VITE_BASE_URL,
     server: {
-      port: 8011
+      port: 8011,
+      proxy: {
+        '/api': {
+          target: 'http://152.136.185.210:5000/',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '')
+        }
+      }
     },
     // 全局css变量
     css: {

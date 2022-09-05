@@ -47,6 +47,20 @@ const loginRules = {
     }
   ]
 }
+
+const loginAction = () => {
+  //el-form的验证，通过返回true，不通过返回false
+  loginRef.value?.validate((valid) => {
+    if (valid) {
+      //2. 开始登录验证
+      console.log('手机登录')
+    }
+  })
+}
+
+defineExpose({
+  loginAction
+})
 </script>
 
 <style scoped lang="less">
