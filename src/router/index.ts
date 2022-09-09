@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
-import localCache from '@/utils/cache'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',

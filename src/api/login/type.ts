@@ -1,5 +1,3 @@
-import type { DefineComponent } from 'vue'
-
 export interface IAccount {
   name: string
   password: string
