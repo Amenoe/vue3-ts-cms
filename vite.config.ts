@@ -5,8 +5,8 @@ import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 
-import IconsResolver from 'unplugin-icons/resolver'
-import Icons from 'unplugin-icons/vite'
+// import IconsResolver from 'unplugin-icons/resolver'
+// import Icons from 'unplugin-icons/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
@@ -27,10 +27,10 @@ export default defineConfig(({ mode }) => {
         imports: ['vue', 'vue-router'], // 自动导入vue和vue-router相关函数
         //自动引入ElementPlus相关函数和图标组件
         resolvers: [
-          ElementPlusResolver(),
-          IconsResolver({
-            prefix: 'icon' // 自动引入的Icon组件统一前缀，默认为 i，设置false为不需要前缀
-          })
+          ElementPlusResolver()
+          // IconsResolver({
+          //   prefix: 'icon' // 自动引入的Icon组件统一前缀，默认为 i，设置false为不需要前缀
+          // })
         ],
         dts: 'src/type/auto-import.d.ts', // 调整自动引入的文件位置
         // eslint报错解决
@@ -44,18 +44,18 @@ export default defineConfig(({ mode }) => {
         resolvers: [
           // Auto register icon components
           // 自动注册图标组件
-          IconsResolver({
-            enabledCollections: ['ep']
-          }),
+          // IconsResolver({
+          //   enabledCollections: ['ep']
+          // }),
           // Auto register Element Plus components
           // 自动导入 Element Plus 组件
           ElementPlusResolver()
         ],
         dts: 'src/type/components.d.ts'
-      }),
-      Icons({
-        autoInstall: true
       })
+      // Icons({
+      //   autoInstall: true
+      // })
     ],
     base: env.VITE_BASE_URL,
     server: {

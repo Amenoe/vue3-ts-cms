@@ -29,7 +29,6 @@ class Request {
     //添加全局的拦截器，后添加的先执行
     this.instance.interceptors.request.use(
       (config) => {
-        console.log('全局的请求拦截器')
         //是否要开启加载动画
         if (this.showLoading) {
           //Element的loading组件
@@ -48,7 +47,6 @@ class Request {
 
     this.instance.interceptors.response.use(
       (config) => {
-        console.log('全局的响应拦截器')
         //请求到数据将loading移除
         this.loadingInstance?.close()
         return config.data

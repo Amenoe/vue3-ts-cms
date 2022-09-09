@@ -1,12 +1,16 @@
 import { defineStore } from 'pinia'
 import localCache from '@/utils/cache'
 import { accountLogin, getUserInfo, getUserMenu } from '@/api/login/login'
-import type { IAccount } from '@/api/login/type'
+import type { IAccount, IMenu } from '@/api/login/type'
 
 import router from '@/router'
 
 const useLoginStore = defineStore('login', {
-  state: () => {
+  state: (): {
+    token: string
+    userInfo: object
+    userMenu: IMenu[]
+  } => {
     return {
       token: '',
       userInfo: {},
@@ -34,7 +38,7 @@ const useLoginStore = defineStore('login', {
       const userMenuResult = await getUserMenu(userInfo.role.id)
       const userMenu = userMenuResult.data
       this.userMenu = userMenu
-      localCache.setCache('userMenus', userMenu)
+      localCache.setCache('userMenu', userMenu)
       //跳转到登录页
       router.push('/main')
     },

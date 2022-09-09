@@ -4,7 +4,6 @@ specifiers:
   '@commitlint/cli': ^17.0.3
   '@commitlint/config-conventional': ^17.0.3
   '@element-plus/icons-vue': ^2.0.9
-  '@iconify-json/ep': ^1.1.7
   '@types/node': ^18.7.6
   '@typescript-eslint/eslint-plugin': ^5.33.1
   '@typescript-eslint/parser': ^5.33.1
@@ -46,7 +45,6 @@ dependencies:
 devDependencies:
   '@commitlint/cli': 17.0.3
   '@commitlint/config-conventional': 17.0.3
-  '@iconify-json/ep': 1.1.7
   '@types/node': 18.7.9
   '@typescript-eslint/eslint-plugin': 5.33.1_vsoshirnpb7xw6mr7xomgfas2i
   '@typescript-eslint/parser': 5.33.1_4rv7y5c6xz3vfxwhbrcxxi73bq
@@ -354,12 +352,6 @@ packages:
 
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
-    dev: true
-
-  /@iconify-json/ep/1.1.7:
-    resolution: {integrity: sha512-GhXWVKalXFlrGgfrCXAgqBre5hv3pPAknuxyywmjamcrL5gl5Mq9WOZtuhb4cB6cJ5pMiKOMtegt73FheqWscA==}
-    dependencies:
-      '@iconify/types': 1.1.0
     dev: true
 
   /@iconify/types/1.1.0:

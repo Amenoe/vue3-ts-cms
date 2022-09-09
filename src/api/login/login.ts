@@ -1,6 +1,6 @@
 import request from '..'
 
-import type { IAccount, IDataType, ILoginResult } from './type'
+import type { IDataType, ILoginResult, IAccount, IMenu } from './type'
 
 //账号登录
 export function accountLogin(account: IAccount) {
@@ -22,7 +22,7 @@ export function getUserInfo(id: number) {
 
 //获取用户菜单
 export function getUserMenu(id: number) {
-  return request.request<IDataType>({
+  return request.request<IDataType<IMenu[]>>({
     method: 'get',
     url: `/role/${id}/menu`,
     showLoading: false

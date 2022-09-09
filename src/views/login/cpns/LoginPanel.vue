@@ -5,7 +5,7 @@
       <el-tab-pane name="account">
         <template #label>
           <span class="custom-tabs-label">
-            <el-icon><i-ep-user-filled /></el-icon>
+            <el-icon><el-icon-user-filled /></el-icon>
             <span>账号登录</span>
           </span>
         </template>
@@ -13,7 +13,7 @@
       </el-tab-pane>
       <el-tab-pane name="phone">
         <template #label>
-          <el-icon><i-ep-iphone /></el-icon>
+          <el-icon><el-icon-iphone /></el-icon>
           <span>手机登录</span>
         </template>
         <LoginPhone ref="phoneRef"></LoginPhone>
