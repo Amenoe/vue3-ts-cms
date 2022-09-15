@@ -10,7 +10,7 @@ import LoginPanelVue from './cpns/LoginPanel.vue'
 .login {
   width: 100%;
   height: 100%;
-  background: url('../../assets/image/login-bg.svg');
+  background: url('../../assets/images/login-bg.svg');
   background-size: cover;
   display: flex;
   flex-direction: column;

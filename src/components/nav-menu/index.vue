@@ -1,10 +1,18 @@
 <template>
   <div class="nav-menu">
     <div class="logo">
-      <img src="../../assets/image/logo.svg" alt="logo" />
-      <span>RainCMS</span>
+      <img src="../../assets/images/logo.svg" alt="logo" />
+      <span v-if="!collapse">RainCMS</span>
     </div>
-    <el-menu default-active="2" class="el-menu-vertical">
+    <!-- 如果菜单的项太多，可以设置unique-opened -->
+    <el-menu
+      default-active="2"
+      class="el-menu-vertical"
+      background-color="#2f344e"
+      :collapse="props.collapse"
+      unique-opened
+      active-text-color="#409eff"
+    >
       <!-- 所有的菜单数据 -->
       <template v-for="item in userMenu" :key="item.id">
         <!-- 拿到一级标签，该标签还有子标签 -->
@@ -19,7 +27,10 @@
             </template>
             <!-- 获取二级标签，该标签还是包含子标签 -->
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item :index="String(subitem.id)">
+              <el-menu-item
+                :index="String(subitem.id)"
+                @click="handleItemClick(subitem)"
+              >
                 <span>{{ subitem.name }}</span>
               </el-menu-item>
             </template>
@@ -41,13 +52,24 @@
 
 <script setup lang="ts">
 import useLoginStore from '@/stores/modules/login'
+import { useRouter } from 'vue-router'
+//接收父组件传的数据
+const props = defineProps({
+  collapse: {
+    type: Boolean,
+    require: true
+  }
+})
+const router = useRouter()
 
 const loginStore = useLoginStore()
 const userMenu = computed(() => {
   return loginStore.userMenu
 })
 
-//获取图标
+const handleItemClick = (item: any) => {
+  router.push({ path: item.url ?? '/404' })
+}
 </script>
 
 <style scoped lang="less">
@@ -62,7 +84,7 @@ const userMenu = computed(() => {
   align-items: center;
   height: 28px;
   padding: 12px 10px 8px 10px;
-  background-color: rgb(41, 45, 67);
+  background-color: #2f344e;
 
   img {
     height: 100%;
@@ -79,7 +101,6 @@ const userMenu = computed(() => {
 // 菜单
 .el-menu {
   border-right: none;
-  background-color: rgb(41, 45, 67);
 }
 //一级菜单
 :deep(.el-sub-menu__title) {
@@ -92,7 +113,7 @@ const userMenu = computed(() => {
 
 //一级菜单hover时的高亮，color改变的是箭头的颜色
 :deep(.el-sub-menu__title:hover) {
-  background-color: rgba(31, 34, 51);
+  background-color: #292d43;
   color: rgba(255, 255, 255); //这个竟然变的是箭头的颜色
 }
 
@@ -100,12 +121,12 @@ const userMenu = computed(() => {
   // 二级菜单
   .el-menu-item {
     padding-left: 50px !important;
-    background-color: rgba(41, 45, 67);
+    background-color: #232638;
     color: rgba(255, 255, 255, 0.7);
   }
 
   .el-menu-item:hover {
-    background-color: rgba(31, 34, 51);
+    background-color: #1c1f2e;
   }
 }
 
@@ -117,12 +138,19 @@ const userMenu = computed(() => {
   }
   //选中后二级菜单文字变色
   .el-menu-item.is-active {
-    color: @primary-color !important;
+    color: @primary-color;
   }
 }
-
 .el-menu-vertical:not(.el-menu--collapse) {
   width: 100%;
   height: calc(100% - 48px);
+}
+
+//折叠时二级菜单
+.el-menu--popup .el-menu-item {
+  color: rgba(255, 255, 255, 0.7);
+}
+.el-menu--popup .el-menu-item.is-active {
+  color: @primary-color;
 }
 </style>

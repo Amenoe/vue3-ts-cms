@@ -67,7 +67,6 @@ class Request {
       }
 
       if (config.showLoading === !DEFAULT_LOADING) {
-        console.log(`修改showLoading:${config.showLoading}`)
         this.showLoading = config.showLoading
       }
 

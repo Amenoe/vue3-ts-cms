@@ -8,7 +8,7 @@ import router from '@/router'
 const useLoginStore = defineStore('login', {
   state: (): {
     token: string
-    userInfo: object
+    userInfo: { name?: string }
     userMenu: IMenu[]
   } => {
     return {

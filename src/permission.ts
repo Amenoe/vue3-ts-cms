@@ -1,6 +1,7 @@
 import router from './router'
 import useLoginStore from './stores/modules/login'
 import localCache from '@/utils/cache'
+import { mapMenuToRoutes } from '@/utils/mapMenus'
 
 //导航拦截
 router.beforeEach((to) => {
@@ -9,7 +10,20 @@ router.beforeEach((to) => {
     if (!token) {
       return '/login'
     } else {
-      useLoginStore().loadLocalLogin()
+      //重新加载pinia中的数据
+      if (useLoginStore().token === '') {
+        useLoginStore().loadLocalLogin()
+      }
     }
   }
 })
+
+export function setupRouter() {
+  useLoginStore().loadLocalLogin()
+  //根据权限动态生成路由表
+  const routes = mapMenuToRoutes(useLoginStore().userMenu)
+  //将routes添加到main.children下
+  routes.forEach((route) => {
+    router.addRoute('main', route)
+  })
+}
