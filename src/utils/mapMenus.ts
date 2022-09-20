@@ -1,6 +1,10 @@
 import type { RouteRecordRaw } from 'vue-router'
+import type { IMenu, IMenuChild } from '@/api/login/type'
+import type { IBreadcrumb } from '@/components/type'
 
-export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
+let firstMenu: any = null
+//动态注册路由
+export function mapMenuToRoutes(userMenus: IMenu[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
   //1. 先去加载默认所有的routes
   const allRoutes: RouteRecordRaw[] = []
@@ -21,6 +25,10 @@ export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
           return route.path === menu.url
         })
         if (route) routes.push(route)
+        //第一个匹配到的路由(用于匹配/main路径的默认选中)
+        if (!firstMenu) {
+          firstMenu = menu
+        }
       } else {
         getRoute(menu.children)
       }
@@ -30,3 +38,38 @@ export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
 
   return routes
 }
+
+//根据路径匹配路由(用于更改侧边栏的默认选中)
+export function pathMapToMenu(
+  userMenus: IMenu[] | IMenuChild[],
+  currentPath: string,
+  breadcrumbs?: IBreadcrumb[]
+): any {
+  for (const menu of userMenus) {
+    if (menu.type === 1) {
+      //findMenu = return menu.type === 2 && menu.url === currentPath
+      const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
+      if (findMenu) {
+        //保存父路由
+        breadcrumbs?.push({ name: menu.name })
+        //保存子路由
+        breadcrumbs?.push({ name: findMenu.name })
+        return findMenu
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu
+    }
+  }
+}
+
+//面包屑参数(name,path)
+export function pathMapBreadcrumbs(
+  userMenus: IMenu[] | IMenuChild[],
+  currentPath: string
+): any {
+  const breadcrumbs: IBreadcrumb[] = []
+  pathMapToMenu(userMenus, currentPath, breadcrumbs)
+  return breadcrumbs
+}
+
+export { firstMenu }

@@ -19,8 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import NavMenu from '@/components/nav-menu/index.vue'
-import NavHeader from '@/components/nav-header/index.vue'
 let isCollapse = ref(false)
 
 const handleFoldChange = (isFold: boolean) => {

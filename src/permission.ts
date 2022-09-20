@@ -2,6 +2,7 @@ import router from './router'
 import useLoginStore from './stores/modules/login'
 import localCache from '@/utils/cache'
 import { mapMenuToRoutes } from '@/utils/mapMenus'
+import { firstMenu } from '@/utils/mapMenus'
 
 //导航拦截
 router.beforeEach((to) => {
@@ -15,6 +16,9 @@ router.beforeEach((to) => {
         useLoginStore().loadLocalLogin()
       }
     }
+  }
+  if (to.path === '/main') {
+    return firstMenu.url
   }
 })
 

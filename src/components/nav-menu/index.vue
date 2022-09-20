@@ -6,7 +6,7 @@
     </div>
     <!-- 如果菜单的项太多，可以设置unique-opened -->
     <el-menu
-      default-active="2"
+      :default-active="defaultActive"
       class="el-menu-vertical"
       background-color="#2f344e"
       :collapse="props.collapse"
@@ -52,21 +52,32 @@
 
 <script setup lang="ts">
 import useLoginStore from '@/stores/modules/login'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import { pathMapToMenu } from '@/utils/mapMenus'
 //接收父组件传的数据
 const props = defineProps({
+  //是否折叠
   collapse: {
     type: Boolean,
     require: true
   }
 })
 const router = useRouter()
+const route = useRoute()
+const currentPath = route.path
 
+//store
 const loginStore = useLoginStore()
 const userMenu = computed(() => {
   return loginStore.userMenu
 })
 
+//data
+//根据当前的url匹配路由，修改侧边栏的默认选中
+const currentMenu = pathMapToMenu(userMenu.value, currentPath)
+const defaultActive = ref(String(currentMenu.id))
+
+//methods
 const handleItemClick = (item: any) => {
   router.push({ path: item.url ?? '/404' })
 }

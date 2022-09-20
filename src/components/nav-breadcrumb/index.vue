@@ -1,0 +1,23 @@
+<template>
+  <div class="nav-breadcrumb">
+    <el-breadcrumb separator="/">
+      <template v-for="item in breadcrumb" :key="item.name">
+        <el-breadcrumb-item>{{ item.name }}</el-breadcrumb-item>
+      </template>
+    </el-breadcrumb>
+  </div>
+</template>
+
+<script setup lang="ts">
+import type { PropType } from 'vue'
+import type { IBreadcrumb } from '../type'
+
+defineProps({
+  breadcrumb: {
+    type: Array as PropType<IBreadcrumb[]>,
+    default: () => []
+  }
+})
+</script>
+
+<style scoped lang="less"></style>
