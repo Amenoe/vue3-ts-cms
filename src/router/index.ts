@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import localCache from '@/utils/cache'
+import { firstRoute } from '@/utils/mapMenus'
 import type { RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[] = [
   {
@@ -25,6 +27,20 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes
+})
+
+//导航拦截
+router.beforeEach((to) => {
+  if (to.path !== '/login') {
+    const token = localCache.getCache('token')
+    if (!token) {
+      return '/login'
+    }
+  }
+  if (to.path === '/main') {
+    console.log(firstRoute)
+    return firstRoute?.path
+  }
 })
 
 export default router

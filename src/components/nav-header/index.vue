@@ -31,7 +31,6 @@
 <script setup lang="ts">
 import useLoginStore from '@/stores/modules/login'
 import NavBreadcrumb from '@/components/nav-breadcrumb/index.vue'
-import type { IBreadcrumb } from '../type'
 import { pathMapBreadcrumbs } from '@/utils/mapMenus'
 //声明触发的事件
 const emit = defineEmits(['foldChange'])
@@ -52,7 +51,7 @@ const avatarUrl = ref(
 //面包屑数据
 //使用computed进行更新(依赖发生改变的时候，computed会重新计算)
 const breadcrumbs = computed(() => {
-  const userMenu = loginStore.userMenu
+  const userMenu = loginStore.userMenus
   const route = useRoute()
   const currentPath = route.path
 

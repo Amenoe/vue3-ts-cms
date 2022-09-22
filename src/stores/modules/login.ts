@@ -1,20 +1,21 @@
 import { defineStore } from 'pinia'
 import localCache from '@/utils/cache'
-import { accountLogin, getUserInfo, getUserMenu } from '@/api/login/login'
+import { accountLogin, getUserInfo, getUserMenus } from '@/api/login/login'
 import type { IAccount, IMenu } from '@/api/login/type'
 
 import router from '@/router'
+import { mapMenuToRoutes } from '@/utils/mapMenus'
 
 const useLoginStore = defineStore('login', {
   state: (): {
     token: string
     userInfo: { name?: string }
-    userMenu: IMenu[]
+    userMenus: IMenu[]
   } => {
     return {
       token: '',
       userInfo: {},
-      userMenu: []
+      userMenus: []
     }
   },
   getters: {},
@@ -35,11 +36,11 @@ const useLoginStore = defineStore('login', {
       localCache.setCache('userInfo', userInfo)
 
       //3. 请求用户的菜单
-      const userMenuResult = await getUserMenu(userInfo.role.id)
-      const userMenu = userMenuResult.data
-      this.userMenu = userMenu
-      localCache.setCache('userMenu', userMenu)
-      //跳转到登录页
+      const userMenusResult = await getUserMenus(userInfo.role.id)
+      const userMenus = userMenusResult.data
+      this.userMenus = userMenus
+      localCache.setCache('userMenus', userMenus)
+      this.addMenusToRoute()
       router.push('/main')
     },
     phoneLoginAction() {
@@ -56,10 +57,21 @@ const useLoginStore = defineStore('login', {
       if (userInfo) {
         this.userInfo = userInfo
       }
-      const userMenu = localCache.getCache('userMenu')
-      if (userMenu) {
-        this.userMenu = userMenu
+      const userMenus = localCache.getCache('userMenus')
+      if (userMenus) {
+        console.log('生成userMenus')
+        this.userMenus = userMenus
+        this.addMenusToRoute()
       }
+    },
+    //生成用户路由表
+    addMenusToRoute() {
+      //根据权限动态生成路由表
+      const routes = mapMenuToRoutes(this.userMenus)
+      //将routes添加到main.children下
+      routes.forEach((route) => {
+        router.addRoute('main', route)
+      })
     }
   }
 })

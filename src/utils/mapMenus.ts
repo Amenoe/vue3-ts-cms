@@ -3,6 +3,8 @@ import type { IMenu, IMenuChild } from '@/api/login/type'
 import type { IBreadcrumb } from '@/components/type'
 
 let firstMenu: any = null
+let firstRoute: RouteRecordRaw | undefined = undefined
+
 //动态注册路由
 export function mapMenuToRoutes(userMenus: IMenu[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
@@ -26,11 +28,13 @@ export function mapMenuToRoutes(userMenus: IMenu[]): RouteRecordRaw[] {
         })
         if (route) routes.push(route)
         //第一个匹配到的路由(用于匹配/main路径的默认选中)
-        if (!firstMenu) {
+        if (!firstRoute && !firstMenu) {
           firstMenu = menu
+          firstRoute = route
+          console.log(route)
         }
       } else {
-        getRoute(menu.children)
+        getRoute(menu.children ?? [])
       }
     }
   }
@@ -72,4 +76,4 @@ export function pathMapBreadcrumbs(
   return breadcrumbs
 }
 
-export { firstMenu }
+export { firstMenu, firstRoute }

@@ -14,7 +14,7 @@
       active-text-color="#409eff"
     >
       <!-- 所有的菜单数据 -->
-      <template v-for="item in userMenu" :key="item.id">
+      <template v-for="item in userMenus" :key="item.id">
         <!-- 拿到一级标签，该标签还有子标签 -->
         <template v-if="item.type === 1">
           <!-- 包含子标签的组件,可以通过插槽显示标题 -->
@@ -68,17 +68,16 @@ const currentPath = route.path
 
 //store
 const loginStore = useLoginStore()
-const userMenu = computed(() => {
-  return loginStore.userMenu
-})
-
+const userMenus = loginStore.userMenus
 //data
 //根据当前的url匹配路由，修改侧边栏的默认选中
-const currentMenu = pathMapToMenu(userMenu.value, currentPath)
+const currentMenu = pathMapToMenu(userMenus, currentPath)
+console.log(currentMenu)
 const defaultActive = ref(String(currentMenu.id))
 
 //methods
 const handleItemClick = (item: any) => {
+  defaultActive.value = item.id + ''
   router.push({ path: item.url ?? '/404' })
 }
 </script>
