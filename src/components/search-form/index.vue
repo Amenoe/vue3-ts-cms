@@ -1,5 +1,8 @@
 <template>
   <div class="search-form">
+    <div class="header">
+      <slot name="header"></slot>
+    </div>
     <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
@@ -17,6 +20,7 @@
                   :placeholder="item.placeholder"
                   :show-password="item.type === 'password'"
                   v-bind="item.otherOptions"
+                  v-model="formData[item.field]"
                 ></el-input>
               </template>
               <template v-else-if="item.type === 'select'">
@@ -24,6 +28,7 @@
                   :placeholder="item.placeholder"
                   v-bind="item.otherOptions"
                   style="width: 100%"
+                  v-model="formData[item.field]"
                 >
                   <el-option
                     v-for="option in item.options"
@@ -37,6 +42,7 @@
                 <el-date-picker
                   :placeholder="item.placeholder"
                   v-bind="item.otherOptions"
+                  v-model="formData[item.field]"
                 ></el-date-picker>
               </template>
             </el-form-item>
@@ -44,6 +50,9 @@
         </template>
       </el-row>
     </el-form>
+    <div class="footer">
+      <slot name="footer"></slot>
+    </div>
   </div>
 </template>
 
@@ -52,6 +61,10 @@ import type { PropType } from 'vue'
 import type { IFormItem } from '../type'
 
 const props = defineProps({
+  modelValue: {
+    type: Object,
+    required: true
+  },
   formItems: {
     type: Array as PropType<IFormItem[]>,
     default: () => [] //一定要写成箭头函数
@@ -77,13 +90,17 @@ const props = defineProps({
     })
   }
 })
-
-console.log(props.formItems[1].label, props.labelWidth)
+//表单数据回传
+const formData = ref({ ...props.modelValue })
+const emit = defineEmits(['update:modelValue'])
+//监听表单的改变，发送给父组件修改
+watch(formData, (newValue) => emit('update:modelValue', newValue), {
+  deep: true
+})
 </script>
 
 <style lang="less" scoped>
 .search-form {
-  padding-top: 22px;
-  padding-left: 20px;
+  padding: 22px;
 }
 </style>

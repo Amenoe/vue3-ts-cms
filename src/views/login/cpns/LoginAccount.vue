@@ -69,7 +69,7 @@ const loginAction = (rememberPsw: boolean) => {
 
       //2. 开始登录验证
       const loginStore = useLoginStore()
-      loginStore.accountLoginAction(loginForm.value)
+      loginStore.accountLoginRequestAction(loginForm.value)
     }
   })
 }

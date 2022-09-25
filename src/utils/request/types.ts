@@ -6,13 +6,18 @@ export interface RequestInterceptors<T = AxiosResponse> {
   requestInterceptorCatch?: (error: any) => any //请求失败拦截
 
   // responseInterceptor?: (res: AxiosResponse) => AxiosResponse
-  responseInterceptor?: (res: T) => T
+  responseInterceptor?: (response: AxiosResponse) => AxiosResponse
   responseInterceptorCatch?: (error: any) => any //请求失败拦截
 }
 
 //自定义接口，用来替换传入参数的类型，可以传入拦截器
-export interface RequestConfig<T = AxiosResponse> extends AxiosRequestConfig {
-  interceptors?: RequestInterceptors<T>
+export interface RequestConfig extends AxiosRequestConfig {
+  interceptors?: RequestInterceptors
   showLoading?: boolean
-  headers?: any
+}
+
+export interface ResultData<T> {
+  data: T
+  returnCode: string
+  success: boolean
 }

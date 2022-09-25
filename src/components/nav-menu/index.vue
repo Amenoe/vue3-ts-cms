@@ -72,7 +72,6 @@ const userMenus = loginStore.userMenus
 //data
 //根据当前的url匹配路由，修改侧边栏的默认选中
 const currentMenu = pathMapToMenu(userMenus, currentPath)
-console.log(currentMenu)
 const defaultActive = ref(String(currentMenu.id))
 
 //methods

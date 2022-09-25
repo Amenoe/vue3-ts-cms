@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import type { IMenu, IMenuChild } from '@/api/login/type'
+import type { IMenu, IMenuChild } from '@/api/type'
 import type { IBreadcrumb } from '@/components/type'
 
 let firstMenu: any = null
@@ -31,7 +31,6 @@ export function mapMenuToRoutes(userMenus: IMenu[]): RouteRecordRaw[] {
         if (!firstRoute && !firstMenu) {
           firstMenu = menu
           firstRoute = route
-          console.log(route)
         }
       } else {
         getRoute(menu.children ?? [])

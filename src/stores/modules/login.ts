@@ -1,7 +1,11 @@
 import { defineStore } from 'pinia'
 import localCache from '@/utils/cache'
-import { accountLogin, getUserInfo, getUserMenus } from '@/api/login/login'
-import type { IAccount, IMenu } from '@/api/login/type'
+import {
+  accountLoginRequest,
+  getUserById,
+  getUserMenus
+} from '@/service/login/login'
+import type { IAccount, IMenu } from '../type'
 
 import router from '@/router'
 import { mapMenuToRoutes } from '@/utils/mapMenus'
@@ -20,26 +24,28 @@ const useLoginStore = defineStore('login', {
   },
   getters: {},
   actions: {
-    async accountLoginAction(loginInfo: IAccount) {
+    async accountLoginRequestAction(loginInfo: IAccount) {
       //1. 实现登录逻辑
-      const loginResult = await accountLogin(loginInfo)
+      const loginResult = await accountLoginRequest(loginInfo)
       console.log(loginResult)
-      const { id, token } = loginResult.data
+      const { id, token } = loginResult
       //取出token并保存
       this.token = token
       localCache.setCache('token', token)
 
       //2. 请求用户信息并保存
-      const userInfoResult = await getUserInfo(id)
-      const userInfo = userInfoResult.data
+      const userInfoResult = await getUserById(id)
+      const userInfo = userInfoResult
       this.userInfo = userInfo
       localCache.setCache('userInfo', userInfo)
+      console.log(userInfoResult)
 
       //3. 请求用户的菜单
       const userMenusResult = await getUserMenus(userInfo.role.id)
-      const userMenus = userMenusResult.data
+      const userMenus = userMenusResult
       this.userMenus = userMenus
       localCache.setCache('userMenus', userMenus)
+      //登录请求时生成路由表
       this.addMenusToRoute()
       router.push('/main')
     },
@@ -61,6 +67,7 @@ const useLoginStore = defineStore('login', {
       if (userMenus) {
         console.log('生成userMenus')
         this.userMenus = userMenus
+        //每次刷新时生成路由表
         this.addMenusToRoute()
       }
     },
