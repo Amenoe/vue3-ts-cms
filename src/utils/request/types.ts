@@ -1,7 +1,7 @@
 import type { AxiosResponse, AxiosRequestConfig } from 'axios'
 
 //接口拦截器
-export interface RequestInterceptors<T = AxiosResponse> {
+export interface RequestInterceptors {
   requestInterceptor?: (config: AxiosRequestConfig) => AxiosRequestConfig //请求拦截
   requestInterceptorCatch?: (error: any) => any //请求失败拦截
 
@@ -19,5 +19,4 @@ export interface RequestConfig extends AxiosRequestConfig {
 export interface ResultData<T> {
   data: T
   returnCode: string
-  success: boolean
 }

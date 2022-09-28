@@ -10,13 +10,31 @@
         </template>
       </SearchForm>
     </div>
-    <div class="content"></div>
+    <div class="content">
+      <PageTable :list-data="userList" :prop-list="propList">
+        <template #status="scope">
+          <el-button
+            plain
+            size="small"
+            :type="scope.row.enable ? 'success' : 'danger'"
+            >{{ scope.row.enable ? '启用' : '禁用' }}</el-button
+          >
+        </template>
+        <template #createAt="scope">
+          <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
+        </template>
+        <template #updateAt="scope">
+          <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
+        </template>
+      </PageTable>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { IForm } from '@/components/type'
 import useSystemStore from '@/stores/modules/system'
+import PageTable from '@/components/page-table/index.vue'
 
 const formData = ref({
   id: '',
@@ -77,11 +95,35 @@ systemStore.getPageListAction({
     size: 10
   }
 })
+
+const userList = computed(() => systemStore.userList)
+const userCount = computed(() => systemStore.userCount)
+
+//表格列表的数据 props是表格列对应的值，label是表格的列的标题，minWidth是最小宽度
+const propList = [
+  { prop: 'name', label: '用户名', minWidth: '100' },
+  { prop: 'realname', label: '姓名', minWidth: '100' },
+  { prop: 'cellphone', label: '手机号', minWidth: '120' },
+  { prop: 'enable', label: '状态', minWidth: '100', slotName: 'status' },
+  {
+    prop: 'createAt',
+    label: '创建时间',
+    minWidth: '200',
+    slotName: 'createAt'
+  },
+  { prop: 'updateAt', label: '更新时间', minWidth: '200', slotName: 'updateAt' }
+]
 </script>
 
 <style scoped lang="less">
+.search {
+  padding: 20px;
+}
 .search-footer {
   text-align: right;
   margin-right: 40px;
+}
+.content {
+  padding: 20px;
 }
 </style>

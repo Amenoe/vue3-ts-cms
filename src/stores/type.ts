@@ -41,9 +41,3 @@ export interface IMenu {
   sort: number
   children: IMenuChild[]
 }
-
-//总的数据类型
-export interface IDataType<T = any> {
-  code: number
-  data: T
-}

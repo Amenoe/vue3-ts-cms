@@ -40,7 +40,7 @@ const handleFoldChange = (isFold: boolean) => {
       height: calc(100% - 48px);
       .page-info {
         background-color: #fff;
-        border-radius: 5px;
+        border-radius: 6px;
       }
     }
     .el-header,

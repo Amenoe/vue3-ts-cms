@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import useLoginStore from '@/stores/modules/login'
 import { useRouter, useRoute } from 'vue-router'
-import { pathMapToMenu } from '@/utils/mapMenus'
+import { pathMapToMenu } from '@/utils/map-menus'
 //接收父组件传的数据
 const props = defineProps({
   //是否折叠

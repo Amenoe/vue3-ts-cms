@@ -19,7 +19,9 @@
               <span>{{ name }}</span>
               <el-dropdown-item divided>个人中心</el-dropdown-item>
               <el-dropdown-item>系统管理</el-dropdown-item>
-              <el-dropdown-item divided>退出登录</el-dropdown-item>
+              <el-dropdown-item divided @click="logout"
+                >退出登录</el-dropdown-item
+              >
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -31,7 +33,10 @@
 <script setup lang="ts">
 import useLoginStore from '@/stores/modules/login'
 import NavBreadcrumb from '@/components/nav-breadcrumb/index.vue'
-import { pathMapBreadcrumbs } from '@/utils/mapMenus'
+import { pathMapBreadcrumbs } from '@/utils/map-menus'
+import localCache from '@/utils/cache'
+import router from '@/router'
+
 //声明触发的事件
 const emit = defineEmits(['foldChange'])
 
@@ -62,6 +67,18 @@ const breadcrumbs = computed(() => {
 const handleFoldClick = () => {
   isFold.value = !isFold.value
   emit('foldChange', isFold.value)
+}
+
+const logout = () => {
+  //弹出退出确认
+  ElMessageBox.confirm('确认注销并退出系统吗', 'Warning', {
+    confirmButtonText: 'OK',
+    cancelButtonText: 'Cancel',
+    type: 'warning'
+  }).then(() => {
+    localCache.clearCache()
+    router.push('/main')
+  })
 }
 </script>
 

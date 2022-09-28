@@ -15,6 +15,9 @@ const useSystemStore = defineStore('system', {
     async getPageListAction(payload: IPageListPayload) {
       const pageResult = await getPageList(payload.pageUrl, payload.queryInfo)
       console.log(pageResult)
+      const { list, totalCount } = pageResult
+      this.userList = list
+      this.userCount = totalCount
     }
   }
 })

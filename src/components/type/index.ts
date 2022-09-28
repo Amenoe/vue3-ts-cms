@@ -24,3 +24,11 @@ export interface IBreadcrumb {
   name: string
   path?: string
 }
+
+//page-table
+export interface IPropList {
+  prop: string
+  label: string
+  minWidth: string
+  slotName?: string
+}

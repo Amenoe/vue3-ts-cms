@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import type { IMenu, IMenuChild } from '@/api/type'
+import type { IMenu, IMenuChild } from '@/stores/type'
 import type { IBreadcrumb } from '@/components/type'
 
 let firstMenu: any = null

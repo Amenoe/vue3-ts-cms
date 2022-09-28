@@ -8,7 +8,7 @@ import {
 import type { IAccount, IMenu } from '../type'
 
 import router from '@/router'
-import { mapMenuToRoutes } from '@/utils/mapMenus'
+import { mapMenuToRoutes } from '@/utils/map-menus'
 
 const useLoginStore = defineStore('login', {
   state: (): {
