@@ -1,111 +1,84 @@
 <template>
   <div class="page-table">
-    <div class="header">
-      <slot name="header">
-        <div class="title">{{ title }}</div>
-        <div class="handler">
-          <slot name="headerHandler"> </slot>
-        </div>
-      </slot>
-    </div>
-    <el-table
-      :data="listData"
-      stripe
-      style="width: 100%"
-      @select="handleTableSelect"
-    >
-      <el-table-column
-        v-if="showSelectColumn"
-        type="selection"
-        align="center"
-        width="80"
-      >
-      </el-table-column>
-      <el-table-column
-        v-if="showIndexColumn"
-        type="index"
-        align="center"
-        label="序号"
-        width="80"
-      >
-      </el-table-column>
-
-      <template v-for="propItem in propList" :key="propItem.prop">
-        <el-table-column v-bind="propItem" align="center">
-          <template #default="scope">
-            <slot :name="propItem.slotName" :row="scope.row">
-              {{ scope.row[propItem.prop as string] }}
-            </slot>
-          </template>
-        </el-table-column>
+    <ContentTable v-bind="pageTableConfig" @tableSelect="tableSelect">
+      <!-- header中的插槽 -->
+      <template #headerHandler>
+        <el-button
+          plain
+          @click="handlerNewUser"
+          type="primary"
+          icon="el-icon-plus"
+          >新增</el-button
+        >
+        <el-button plain @click="handlerRefresh" icon="el-icon-refresh"
+          >刷新</el-button
+        >
       </template>
-    </el-table>
-    <div class="footer">
-      <slot name="footer">
-        <el-pagination
-          :page-sizes="[100, 200, 300, 400]"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
-        />
-      </slot>
-    </div>
+      <!-- 列中的插槽 -->
+      <template #status="scope">
+        <el-button
+          plain
+          size="small"
+          :type="scope.row.enable ? 'success' : 'danger'"
+          >{{ scope.row.enable ? '启用' : '禁用' }}</el-button
+        >
+      </template>
+      <template #createAt="scope">
+        <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
+      </template>
+      <template #updateAt="scope">
+        <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
+      </template>
+      <template #handler>
+        <div class="handle-btn">
+          <el-button icon="el-icon-edit" size="small" type="text"
+            >编辑</el-button
+          >
+          <el-button icon="el-icon-delete" size="small" type="text"
+            >删除</el-button
+          >
+        </div>
+      </template>
+    </ContentTable>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import type { IPropListItem } from '../type'
+import ContentTable from '@/baseui/table/table.vue'
+import type { IPageTable } from '@/baseui/table/type'
 
 defineProps({
-  title: {
+  pageTableConfig: {
+    type: Object as PropType<IPageTable>,
+    required: true
+  },
+  pageName: {
     type: String,
-    default: ''
-  },
-  listData: {
-    type: Array,
     required: true
-  },
-  propList: {
-    type: Array as PropType<IPropListItem[]>,
-    required: true
-  },
-  showIndexColumn: {
-    type: Boolean,
-    default: false
-  },
-  showSelectColumn: {
-    type: Boolean,
-    default: false
   }
 })
-//定义发出事件
-const emit = defineEmits(['tableSelect'])
 
-const handleTableSelect = (selection: any) => {
-  emit('tableSelect', selection)
+//处理列表子组件返回的数据
+const tableSelect = (selection: any) => {
+  console.log(selection)
+}
+//新建用户
+const handlerNewUser = () => {
+  console.log('click new user')
+}
+//刷新列表
+const handlerRefresh = () => {
+  console.log('click refresh')
 }
 </script>
 
 <style scoped lang="less">
 .page-table {
-  background-color: #fff;
-  border: 6px;
-  .header {
-    display: flex;
-    height: 45px;
-    padding: 12px 22px;
-    justify-content: space-between;
-    align-items: center;
-    .title {
-      font-size: 20px;
-      font-weight: 700;
-    }
-  }
-  .footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: right;
-    padding: 12px 22px;
+  padding: 12px;
+
+  .handle-btn .el-button {
+    margin-left: 0px;
   }
 }
 </style>

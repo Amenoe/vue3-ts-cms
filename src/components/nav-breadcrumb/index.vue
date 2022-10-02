@@ -10,7 +10,11 @@
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import type { IBreadcrumb } from '../type'
+
+export interface IBreadcrumb {
+  name: string
+  path?: string
+}
 
 defineProps({
   breadcrumb: {

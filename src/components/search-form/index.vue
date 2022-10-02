@@ -1,108 +1,49 @@
 <template>
   <div class="search-form">
-    <div class="header">
-      <slot name="header"></slot>
-    </div>
-    <el-form :label-width="labelWidth">
-      <el-row>
-        <template v-for="item in formItems" :key="item.label">
-          <el-col v-bind="colLayout">
-            <el-form-item
-              :label="item.label"
-              :rules="item.rules"
-              :style="itemStyle"
-              class="form-item"
-            >
-              <template
-                v-if="item.type === 'input' || item.type === 'password'"
-              >
-                <el-input
-                  :placeholder="item.placeholder"
-                  :show-password="item.type === 'password'"
-                  v-bind="item.otherOptions"
-                  v-model="formData[item.field]"
-                ></el-input>
-              </template>
-              <template v-else-if="item.type === 'select'">
-                <el-select
-                  :placeholder="item.placeholder"
-                  v-bind="item.otherOptions"
-                  style="width: 100%"
-                  v-model="formData[item.field]"
-                >
-                  <el-option
-                    v-for="option in item.options"
-                    :key="option.value"
-                    :label="option.label"
-                    :value="option.value"
-                  ></el-option>
-                </el-select>
-              </template>
-              <template v-else-if="item.type === 'datepicker'">
-                <el-date-picker
-                  :placeholder="item.placeholder"
-                  v-bind="item.otherOptions"
-                  v-model="formData[item.field]"
-                ></el-date-picker>
-              </template>
-            </el-form-item>
-          </el-col>
-        </template>
-      </el-row>
-    </el-form>
-    <div class="footer">
-      <slot name="footer"></slot>
-    </div>
+    <Form v-bind="searchFormConfig" v-model="formData">
+      <template #footer>
+        <div class="search-footer">
+          <el-button type="primary" icon="el-icon-search">搜索</el-button>
+          <el-button icon="el-icon-refresh">重置</el-button>
+        </div>
+      </template></Form
+    >
   </div>
 </template>
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import type { IFormItem } from '../type'
+import type { ISearchForm } from '@/baseui/form/type'
+import Form from '../../baseui/form/form.vue'
 
 const props = defineProps({
-  modelValue: {
-    type: Object,
+  searchFormConfig: {
+    type: Object as PropType<ISearchForm>,
     required: true
   },
-  formItems: {
-    type: Array as PropType<IFormItem[]>,
-    default: () => [] //一定要写成箭头函数
-  },
-  labelWidth: {
+  title: {
     type: String,
-    default: '100px'
-  },
-  itemStyle: {
-    type: Object,
-    default: () => ({
-      padding: '10px 40px'
-    })
-  },
-  colLayout: {
-    type: Object,
-    default: () => ({
-      xl: 6,
-      lg: 8,
-      md: 12,
-      sm: 24,
-      xs: 24
-    })
+    default: '高级检索'
   }
 })
-//表单数据回传
-const formData = ref({ ...props.modelValue })
-const emit = defineEmits(['update:modelValue'])
-//监听表单的改变，发送给父组件修改
-watch(formData, (newValue) => emit('update:modelValue', newValue), {
-  deep: true
-})
+interface IFormData {
+  [key: string]: any
+}
+//获取回传数据的属性
+const originFormData: IFormData = {}
+const formItems = props.searchFormConfig.formItems ?? []
+for (const formItem of formItems) {
+  originFormData[`${formItem.field}`] = ''
+}
+const formData = ref<IFormData>({ ...originFormData })
 </script>
 
 <style lang="less" scoped>
 .search-form {
-  padding: 22px;
-  background-color: #fff;
-  border-radius: 6px;
+  padding: 12px;
+  .search-footer {
+    text-align: right;
+    margin-right: 40px;
+  }
 }
 </style>
