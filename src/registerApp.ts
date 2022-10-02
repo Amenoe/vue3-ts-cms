@@ -1,5 +1,8 @@
 import type { App } from 'vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import ElementPlus from 'element-plus'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+
 import { formatUtcString } from '@/utils/date-format'
 
 function registerProperties(app: App) {
@@ -11,7 +14,7 @@ function registerProperties(app: App) {
   }
 }
 
-function registerEleIcon(app: App) {
+function registerElement(app: App) {
   //全局引入element-icon图标
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(
@@ -19,10 +22,14 @@ function registerEleIcon(app: App) {
       component
     )
   }
+  //element国际化
+  app.use(ElementPlus, {
+    locale: zhCn
+  })
 }
 
 //全局注册函数
 export function globalRegister(app: App): void {
   app.use(registerProperties)
-  registerEleIcon(app)
+  app.use(registerElement)
 }

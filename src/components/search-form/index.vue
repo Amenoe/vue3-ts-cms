@@ -102,5 +102,7 @@ watch(formData, (newValue) => emit('update:modelValue', newValue), {
 <style lang="less" scoped>
 .search-form {
   padding: 22px;
+  background-color: #fff;
+  border-radius: 6px;
 }
 </style>
