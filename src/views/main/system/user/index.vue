@@ -1,26 +1,14 @@
 <template>
   <div class="user">
     <SearchForm :searchFormConfig="searchFormConfig"> </SearchForm>
-    <PageTable :pageTableConfig="pageTableConfig" pageName="user"> </PageTable>
+    <PageTable :pageTableConfig="pageTableConfig" :pageName="pageName">
+    </PageTable>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { ISearchForm } from '@/baseui/form/type'
 import type { IPageTable } from '@/baseui/table/type'
-import useSystemStore from '@/stores/modules/system'
-
-//store
-const systemStore = useSystemStore()
-systemStore.getPageListAction({
-  pageUrl: 'users/list',
-  queryInfo: {
-    offset: 0,
-    size: 10
-  }
-})
-const userList = computed(() => systemStore.userList)
-const userCount = computed(() => systemStore.userCount)
 
 //搜索组件的配置
 const searchFormConfig: ISearchForm = {
@@ -68,9 +56,9 @@ const searchFormConfig: ISearchForm = {
 }
 
 //列表的配置
+const pageName = 'users'
 const pageTableConfig: IPageTable = {
   title: '用户列表',
-  listData: userList.value,
   propList: [
     { prop: 'name', label: '用户名', minWidth: '100' },
     { prop: 'realname', label: '姓名', minWidth: '100' },

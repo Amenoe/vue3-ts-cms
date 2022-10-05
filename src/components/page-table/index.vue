@@ -1,6 +1,10 @@
 <template>
   <div class="page-table">
-    <ContentTable v-bind="pageTableConfig" @tableSelect="tableSelect">
+    <ContentTable
+      :listData="dataList"
+      v-bind="pageTableConfig"
+      @tableSelect="tableSelect"
+    >
       <!-- header中的插槽 -->
       <template #headerHandler>
         <el-button
@@ -47,8 +51,9 @@
 import type { PropType } from 'vue'
 import ContentTable from '@/baseui/table/table.vue'
 import type { IPageTable } from '@/baseui/table/type'
+import useSystemStore from '@/stores/modules/system'
 
-defineProps({
+const props = defineProps({
   pageTableConfig: {
     type: Object as PropType<IPageTable>,
     required: true
@@ -58,6 +63,19 @@ defineProps({
     required: true
   }
 })
+
+//store
+const systemStore = useSystemStore()
+//发送网络请求
+systemStore.getPageListAction({
+  // pageUrl: 'users/list',
+  pageName: props.pageName,
+  queryInfo: {
+    offset: 0,
+    size: 10
+  }
+})
+const dataList = computed(() => systemStore.pageListData(props.pageName))
 
 //处理列表子组件返回的数据
 const tableSelect = (selection: any) => {

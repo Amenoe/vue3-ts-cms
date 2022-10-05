@@ -14,7 +14,6 @@ export interface IPropListItem {
  * title: 列表标题
  */
 export interface IPageTable {
-  listData: any
   propList: IPropListItem[]
   showIndexColumn: true
   showSelectColumn: false

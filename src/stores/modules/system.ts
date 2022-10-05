@@ -5,19 +5,55 @@ import type { IPageListPayload } from '../type'
 const useSystemStore = defineStore('system', {
   state: () => {
     return {
-      userList: [],
-      userCount: []
+      usersList: [],
+      usersTotalCount: 0,
+      departmentList: [],
+      departmentTotalCount: 0,
+      roleList: [],
+      roleTotalCount: 0,
+      menuList: [],
+      categoryList: [],
+      categoryTotalCount: 0,
+      goodsList: [],
+      goodsTotalCount: 0,
+      storyList: [],
+      storyTotalCount: 0
     }
   },
-  getters: {},
+  getters: {
+    pageListData(state) {
+      return (pageName: string) => {
+        const listData = (state as any)[`${pageName}List`] ?? []
+        return listData
+      }
+    },
+    pageListDataCount(state) {
+      return (pageName: string) => {
+        const listCount = (state as any)[`${pageName}TotalCount`] ?? 0
+        return listCount
+      }
+    }
+  },
   actions: {
     //页面发送请求
     async getPageListAction(payload: IPageListPayload) {
-      const pageResult = await getPageList(payload.pageUrl, payload.queryInfo)
-      console.log(pageResult)
+      const pageName = payload.pageName
+      const pageResult = await getPageList(
+        `${payload.pageName}/list`,
+        payload.queryInfo
+      )
+      //保存数据到state中
       const { list, totalCount } = pageResult
-      this.userList = list
-      this.userCount = totalCount
+      switch (pageName) {
+        case 'users':
+          this.usersList = list
+          this.usersTotalCount = totalCount
+          break
+        case 'role':
+          this.roleList = list
+          this.roleTotalCount = totalCount
+          break
+      }
     }
   }
 })

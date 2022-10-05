@@ -4,7 +4,7 @@ export interface ISystemState {
 }
 
 export interface IPageListPayload {
-  pageUrl: string
+  pageName: string
   queryInfo: any
 }
 

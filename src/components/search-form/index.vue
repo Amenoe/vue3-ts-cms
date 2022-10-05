@@ -3,8 +3,15 @@
     <Form v-bind="searchFormConfig" v-model="formData">
       <template #footer>
         <div class="search-footer">
-          <el-button type="primary" icon="el-icon-search">搜索</el-button>
-          <el-button icon="el-icon-refresh">重置</el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            @click="handleSearchClick"
+            >搜索</el-button
+          >
+          <el-button icon="el-icon-refresh" @click="handleResetClick"
+            >重置</el-button
+          >
         </div>
       </template></Form
     >
@@ -26,16 +33,22 @@ const props = defineProps({
     default: '高级检索'
   }
 })
-interface IFormData {
-  [key: string]: any
-}
-//获取回传数据的属性
-const originFormData: IFormData = {}
+//动态获取回传数据的属性
+const originFormData: any = {}
 const formItems = props.searchFormConfig.formItems ?? []
 for (const formItem of formItems) {
   originFormData[`${formItem.field}`] = ''
 }
-const formData = ref<IFormData>({ ...originFormData })
+const formData = ref({ ...originFormData })
+
+//点击重置
+const handleResetClick = () => {
+  formData.value = originFormData
+}
+//点击搜索
+const handleSearchClick = () => {
+  console.log(formData.value)
+}
 </script>
 
 <style lang="less" scoped>
