@@ -37,17 +37,25 @@ const props = defineProps({
 const originFormData: any = {}
 const formItems = props.searchFormConfig.formItems ?? []
 for (const formItem of formItems) {
-  originFormData[`${formItem.field}`] = ''
+  originFormData[formItem.field] = ''
 }
 const formData = ref({ ...originFormData })
 
+const emit = defineEmits(['resetClick', 'searchClick'])
+
 //点击重置
 const handleResetClick = () => {
-  formData.value = originFormData
+  // formData.value = originFormData
+  //通过修改对象内的值，直接影响子组件(子组件中使用浅拷贝所以是同一个对象)
+  for (const key in originFormData) {
+    formData.value[key] = originFormData[key]
+  }
+  emit('resetClick')
 }
+
 //点击搜索
 const handleSearchClick = () => {
-  console.log(formData.value)
+  emit('searchClick', formData.value)
 }
 </script>
 

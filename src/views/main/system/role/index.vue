@@ -26,7 +26,7 @@ const searchFormConfig: ISearchForm = {
       placeholder: '请输入用户名'
     },
     {
-      field: 'createTime',
+      field: 'createAt',
       label: '创建时间',
       type: 'datepicker',
       otherOptions: {

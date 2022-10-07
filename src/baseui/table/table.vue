@@ -43,9 +43,11 @@
     <div class="footer">
       <slot name="footer">
         <el-pagination
-          :page-sizes="[100, 200, 300, 400]"
+          v-model:currentPage="currentPage"
+          v-model:pageSize="pageSize"
+          :page-sizes="[10, 20, 30]"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :total="listCount"
         />
       </slot>
     </div>
@@ -56,7 +58,7 @@
 import type { PropType } from 'vue'
 import type { IPropListItem } from './/type'
 
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     default: ''
@@ -64,6 +66,10 @@ defineProps({
   listData: {
     type: Array,
     required: true
+  },
+  listCount: {
+    type: Number,
+    default: 0
   },
   propList: {
     type: Array as PropType<IPropListItem[]>,
@@ -76,11 +82,32 @@ defineProps({
   showSelectColumn: {
     type: Boolean,
     default: false
+  },
+  //分页器数据
+  page: {
+    type: Object,
+    default: () => ({ currentPage: 0, pageSize: 10 })
   }
 })
-//定义发出事件
-const emit = defineEmits(['tableSelect'])
 
+//定义发出事件
+const emit = defineEmits(['tableSelect', 'update:page'])
+
+//分页器
+const pageSize = ref(props.page.pageSize)
+const currentPage = ref(props.page.currentPage)
+
+//通过watch监听分页器数据的变化
+watch([pageSize, currentPage], ([pageSize, currentPage]) => {
+  emit('update:page', { ...props.page, pageSize, currentPage })
+})
+
+// const handleSizeChange = (pageSize: number) => {
+//   emit('update:page', { ...props.page, pageSize })
+// }
+// const handleCurrentChange = (currentPage: number) => {
+//   emit('update:page', { ...props.page, currentPage })
+// }
 const handleTableSelect = (selection: any) => {
   emit('tableSelect', selection)
 }

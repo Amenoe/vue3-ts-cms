@@ -5,7 +5,7 @@ export interface IFormItem {
   type: IFormType
   label: string
   rules?: any[]
-  placeholder?: string | number
+  placeholder?: string
   //针对select
   options?: any[]
   //针对特殊的属性

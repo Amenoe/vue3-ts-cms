@@ -4,7 +4,7 @@
       <component :is="isFold ? 'el-icon-fold' : 'el-icon-expand'"></component>
     </el-icon>
     <div class="content">
-      <NavBreadcrumb :breadcrumb="breadcrumbs" class="nav-breadcrumb" />
+      <Breadcrumb :breadcrumb="breadcrumbs" class="nav-breadcrumb" />
       <div class="user-info">
         <el-dropdown trigger="click">
           <span>
@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import useLoginStore from '@/stores/modules/login'
-import NavBreadcrumb from '@/components/nav-breadcrumb/index.vue'
+import Breadcrumb from '@/baseui/breadcrumb/index.vue'
 import { pathMapBreadcrumbs } from '@/utils/map-menus'
 import localCache from '@/utils/cache'
 import router from '@/router'

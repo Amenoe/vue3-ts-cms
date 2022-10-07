@@ -1,24 +1,31 @@
 <template>
   <div class="user">
-    <SearchForm :searchFormConfig="searchFormConfig"> </SearchForm>
-    <PageTable :pageTableConfig="pageTableConfig" :pageName="pageName">
+    <SearchForm
+      :searchFormConfig="searchFormConfig"
+      @resetClick="resetClick"
+      @searchClick="searchClick"
+    >
+    </SearchForm>
+    <PageTable
+      :pageTableConfig="pageTableConfig"
+      :pageName="pageName"
+      ref="pageTableRef"
+    >
     </PageTable>
   </div>
 </template>
 
 <script setup lang="ts">
+import SearchForm from '@/components/search-form/index.vue'
+import PageTable from '@/components/page-table/index.vue'
 import type { ISearchForm } from '@/baseui/form/type'
 import type { IPageTable } from '@/baseui/table/type'
+
+import { usePageSearch } from '@/hooks/usePageSearch'
 
 //搜索组件的配置
 const searchFormConfig: ISearchForm = {
   formItems: [
-    {
-      field: 'id',
-      label: 'id',
-      type: 'input',
-      placeholder: '请输入id'
-    },
     {
       field: 'name',
       label: '用户名',
@@ -26,23 +33,29 @@ const searchFormConfig: ISearchForm = {
       placeholder: '请输入用户名'
     },
     {
-      field: 'password',
-      label: '密码',
-      type: 'password',
-      placeholder: '请输入密码'
+      field: 'realname',
+      type: 'input',
+      label: '真实姓名',
+      placeholder: '请输入真实姓名'
     },
     {
-      field: 'sport',
-      label: '喜欢的运动',
+      field: 'cellphone',
+      type: 'input',
+      label: '电话号码',
+      placeholder: '请输入电话号码'
+    },
+    {
+      field: 'enable',
       type: 'select',
-      placeholder: '请选择喜欢的运动',
+      label: '用户状态',
+      placeholder: '请选择用户状态',
       options: [
-        { label: '跑步', value: 'runing' },
-        { label: '足球', value: 'football' }
+        { label: '启用', value: 1 },
+        { label: '禁用', value: 0 }
       ]
     },
     {
-      field: 'createTime',
+      field: 'createAt',
       label: '创建时间',
       type: 'datepicker',
       otherOptions: {
@@ -61,7 +74,7 @@ const pageTableConfig: IPageTable = {
   title: '用户列表',
   propList: [
     { prop: 'name', label: '用户名', minWidth: '100' },
-    { prop: 'realname', label: '姓名', minWidth: '100' },
+    { prop: 'realname', label: '真实姓名', minWidth: '100' },
     { prop: 'cellphone', label: '手机号', minWidth: '120' },
     { prop: 'enable', label: '状态', minWidth: '100', slotName: 'status' },
     {
@@ -81,6 +94,8 @@ const pageTableConfig: IPageTable = {
   showIndexColumn: true,
   showSelectColumn: false
 }
+
+const { pageTableRef, resetClick, searchClick } = usePageSearch()
 </script>
 
 <style scoped lang="less"></style>
