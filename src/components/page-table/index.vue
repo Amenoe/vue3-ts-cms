@@ -69,25 +69,31 @@ const props = defineProps({
 //store
 const systemStore = useSystemStore()
 
+const dataList = computed(() => systemStore.pageListData(props.pageName))
+
+//TODO分页器
+const dataCount = computed(() => systemStore.pageListDataCount(props.pageName))
+const pageInfo = ref({ currentPage: 1, pageSize: 10 })
+
+watch(pageInfo, () => {
+  getPageData()
+  console.log(pageInfo.value.currentPage)
+  console.log(pageInfo.value.pageSize)
+})
+
+//调用pinia中的网络请求
 const getPageData = (queryInfo: any = {}) => {
-  //调用pinia中的网络请求
   systemStore.getPageListAction({
     // pageUrl: 'users/list',
     pageName: props.pageName,
     queryInfo: {
-      offset: 0,
-      size: 10,
+      offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
+      size: pageInfo.value.pageSize,
       ...queryInfo //拼接查询条件,可以是数据中的任意值
     }
   })
 }
 getPageData() //首次调用
-
-const dataList = computed(() => systemStore.pageListData(props.pageName))
-
-//TODO分页器
-const dataCount = computed(() => systemStore.pageListDataCount(props.pageName))
-const pageInfo = ref({ currentPage: 0, pageSize: 10 })
 
 //处理列表子组件返回的数据
 const tableSelect = (selection: any) => {

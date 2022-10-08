@@ -10,7 +10,17 @@
         </el-header>
         <el-main class="page-content">
           <div class="page-info">
-            <router-view></router-view>
+            <router-view v-slot="{ Component, route }">
+              <transition
+                name="fade-transform"
+                mode="out-in"
+                enter-from-class="fade-transform-enter"
+              >
+                <keep-alive>
+                  <component :is="Component" :key="route.path"></component>
+                </keep-alive>
+              </transition>
+            </router-view>
           </div>
         </el-main>
       </el-container>
