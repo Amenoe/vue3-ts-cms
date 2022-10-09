@@ -50,7 +50,7 @@ const useLoginStore = defineStore('login', {
       router.push('/main')
     },
     phoneLoginAction() {
-      console.log()
+      console.log('电话登录')
     },
 
     //重新设置到pinia中
@@ -65,7 +65,6 @@ const useLoginStore = defineStore('login', {
       }
       const userMenus = localCache.getCache('userMenus')
       if (userMenus) {
-        console.log('生成userMenus')
         this.userMenus = userMenus
         //每次刷新时生成路由表
         this.addMenusToRoute()

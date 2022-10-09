@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { getPageList } from '@/service/main/system/system'
 import type { IPageListPayload } from '../type'
-//系统模块store
+//系统模块store,还包括了故事和商品信息
 const useSystemStore = defineStore('system', {
   state: () => {
     return {
@@ -42,6 +42,7 @@ const useSystemStore = defineStore('system', {
         `${payload.pageName}/list`,
         payload.queryInfo
       )
+      console.log(pageResult)
       //保存数据到state中
       const { list, totalCount } = pageResult
       switch (pageName) {
@@ -52,6 +53,10 @@ const useSystemStore = defineStore('system', {
         case 'role':
           this.roleList = list
           this.roleTotalCount = totalCount
+          break
+        case 'goods':
+          this.goodsList = list
+          this.goodsTotalCount = totalCount
           break
       }
     }

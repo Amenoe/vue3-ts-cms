@@ -11,6 +11,14 @@
       :pageName="pageName"
       ref="pageTableRef"
     >
+      <template #status="scope">
+        <el-button
+          plain
+          size="small"
+          :type="scope.row.enable ? 'success' : 'danger'"
+          >{{ scope.row.enable ? '启用' : '禁用' }}</el-button
+        >
+      </template>
     </PageTable>
   </div>
 </template>

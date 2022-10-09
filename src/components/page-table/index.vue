@@ -21,14 +21,19 @@
         >
       </template>
       <!-- 列中的插槽 -->
-      <template #status="scope">
-        <el-button
-          plain
-          size="small"
-          :type="scope.row.enable ? 'success' : 'danger'"
-          >{{ scope.row.enable ? '启用' : '禁用' }}</el-button
-        >
+
+      <!-- 页面传过来的剩余插槽 -->
+
+      <template
+        v-for="item in pagePropSlots"
+        :key="item.prop"
+        #[item.slotName]="scope"
+      >
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
       </template>
+
       <template #createAt="scope">
         <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
       </template>
@@ -75,12 +80,6 @@ const dataList = computed(() => systemStore.pageListData(props.pageName))
 const dataCount = computed(() => systemStore.pageListDataCount(props.pageName))
 const pageInfo = ref({ currentPage: 1, pageSize: 10 })
 
-watch(pageInfo, () => {
-  getPageData()
-  console.log(pageInfo.value.currentPage)
-  console.log(pageInfo.value.pageSize)
-})
-
 //调用pinia中的网络请求
 const getPageData = (queryInfo: any = {}) => {
   systemStore.getPageListAction({
@@ -95,6 +94,19 @@ const getPageData = (queryInfo: any = {}) => {
 }
 getPageData() //首次调用
 
+//侦听分页器的数据改变，调用网络请求
+watch(pageInfo, () => {
+  getPageData()
+})
+
+//获取页面相关的动态插槽名
+const pagePropSlots: any = props.pageTableConfig.propList.filter((item) => {
+  if (item.slotName === 'createAt') return false
+  if (item.slotName === 'updateAt') return false
+  if (item.slotName === 'handler') return false
+  return true
+})
+console.log(pagePropSlots)
 //处理列表子组件返回的数据
 const tableSelect = (selection: any) => {
   console.log(selection)
@@ -118,7 +130,7 @@ defineExpose({
   padding: 12px;
 
   .handle-btn .el-button {
-    margin-left: 0px;
+    margin-left: 6px;
   }
 }
 </style>
