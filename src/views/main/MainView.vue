@@ -77,6 +77,6 @@ const handleFoldChange = (isFold: boolean) => {
 .el-main {
   color: #333;
   text-align: center;
-  background-color: @primary-light-9;
+  background-color: @main-back-color;
 }
 </style>

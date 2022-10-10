@@ -24,6 +24,7 @@ const useSystemStore = defineStore('system', {
     pageListData(state) {
       return (pageName: string) => {
         const listData = (state as any)[`${pageName}List`] ?? []
+        console.log(listData)
         return listData
       }
     },
@@ -53,6 +54,9 @@ const useSystemStore = defineStore('system', {
         case 'role':
           this.roleList = list
           this.roleTotalCount = totalCount
+          break
+        case 'menu':
+          this.menuList = list
           break
         case 'goods':
           this.goodsList = list

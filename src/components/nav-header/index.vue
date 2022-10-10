@@ -6,7 +6,7 @@
     <div class="content">
       <Breadcrumb :breadcrumb="breadcrumbs" class="nav-breadcrumb" />
       <div class="user-info">
-        <el-dropdown trigger="click">
+        <el-dropdown>
           <span>
             <el-avatar :size="22" :src="avatarUrl" />
             <el-icon class="el-icon--right">

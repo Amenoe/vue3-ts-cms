@@ -13,6 +13,7 @@
       stripe
       style="width: 100%"
       @select="handleTableSelect"
+      v-bind="childrenProps"
     >
       <el-table-column
         v-if="showSelectColumn"
@@ -40,7 +41,7 @@
         </el-table-column>
       </template>
     </el-table>
-    <div class="footer">
+    <div class="footer" v-if="showFooter">
       <slot name="footer">
         <el-pagination
           v-model:currentPage="currentPage"
@@ -83,10 +84,18 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  showFooter: {
+    type: Boolean,
+    default: true
+  },
   //分页器数据
   page: {
     type: Object,
     default: () => ({ currentPage: 1, pageSize: 10 })
+  },
+  childrenProps: {
+    type: Object,
+    default: () => ({})
   }
 })
 
@@ -116,6 +125,7 @@ const handleTableSelect = (selection: any) => {
 <style scoped lang="less">
 .table {
   background-color: #fff;
+  padding: 6px 0px;
   border-radius: 6px;
 
   .header {
@@ -133,7 +143,7 @@ const handleTableSelect = (selection: any) => {
     display: flex;
     flex-direction: row;
     justify-content: right;
-    padding: 12px 22px;
+    padding: 12px 22px 6px; //上 左右 下
   }
 }
 </style>

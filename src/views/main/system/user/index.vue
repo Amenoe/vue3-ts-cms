@@ -1,14 +1,14 @@
 <template>
   <div class="user">
     <SearchForm
-      :searchFormConfig="searchFormConfig"
+      :search-form-config="searchFormConfig"
       @resetClick="resetClick"
       @searchClick="searchClick"
     >
     </SearchForm>
     <PageTable
-      :pageTableConfig="pageTableConfig"
-      :pageName="pageName"
+      :page-table-config="pageTableConfig"
+      :page-name="pageName"
       ref="pageTableRef"
     >
       <template #status="scope">
@@ -99,8 +99,7 @@ const pageTableConfig: IPageTable = {
     },
     { label: '操作', minWidth: '150', slotName: 'handler' }
   ],
-  showIndexColumn: true,
-  showSelectColumn: false
+  showIndexColumn: true
 }
 
 const { pageTableRef, resetClick, searchClick } = usePageSearch()

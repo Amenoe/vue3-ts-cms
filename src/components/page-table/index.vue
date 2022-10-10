@@ -21,19 +21,6 @@
         >
       </template>
       <!-- 列中的插槽 -->
-
-      <!-- 页面传过来的剩余插槽 -->
-
-      <template
-        v-for="item in pagePropSlots"
-        :key="item.prop"
-        #[item.slotName]="scope"
-      >
-        <template v-if="item.slotName">
-          <slot :name="item.slotName" :row="scope.row"></slot>
-        </template>
-      </template>
-
       <template #createAt="scope">
         <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
       </template>
@@ -49,6 +36,17 @@
             >删除</el-button
           >
         </div>
+      </template>
+
+      <!-- 页面传过来的剩余插槽 -->
+      <template
+        v-for="item in pagePropSlots"
+        :key="item.prop"
+        #[item.slotName]="scope"
+      >
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
       </template>
     </ContentTable>
   </div>
@@ -74,9 +72,8 @@ const props = defineProps({
 //store
 const systemStore = useSystemStore()
 
+//第一次计算可能为空，但是当网络请求后数据发生改变又会再计算一次
 const dataList = computed(() => systemStore.pageListData(props.pageName))
-
-//TODO分页器
 const dataCount = computed(() => systemStore.pageListDataCount(props.pageName))
 const pageInfo = ref({ currentPage: 1, pageSize: 10 })
 
@@ -99,14 +96,13 @@ watch(pageInfo, () => {
   getPageData()
 })
 
-//获取页面相关的动态插槽名
+//获取页面相关的动态插槽名(过滤公共的插槽)
 const pagePropSlots: any = props.pageTableConfig.propList.filter((item) => {
   if (item.slotName === 'createAt') return false
   if (item.slotName === 'updateAt') return false
   if (item.slotName === 'handler') return false
   return true
 })
-console.log(pagePropSlots)
 //处理列表子组件返回的数据
 const tableSelect = (selection: any) => {
   console.log(selection)
