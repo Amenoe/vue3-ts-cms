@@ -3,9 +3,14 @@ export interface ISystemState {
   userCount: []
 }
 
-export interface IPageListPayload {
+export interface IGetPageListPayload {
   pageName: string
   queryInfo: any
+}
+
+export interface IDeletePageDataPayload {
+  pageName: string
+  id: string
 }
 
 export interface IAccount {
@@ -28,8 +33,9 @@ export interface IMenuChild {
   name: string
   sort: number
   type: number
-  children?: any
   parentId: number
+  permission?: string
+  children?: any
 }
 //用户菜单的类型
 export interface IMenu {

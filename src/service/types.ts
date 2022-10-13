@@ -8,3 +8,8 @@ export interface LoginInfo {
   token: string
   name: string
 }
+
+export interface IDataType {
+  list: object[]
+  totalCount: number
+}

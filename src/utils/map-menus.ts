@@ -1,6 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
 import type { IMenu, IMenuChild } from '@/stores/type'
-import type { IBreadcrumb } from '@/components/type'
 
 let firstMenu: any = null
 let firstRoute: RouteRecordRaw | undefined = undefined
@@ -46,7 +45,7 @@ export function mapMenuToRoutes(userMenus: IMenu[]): RouteRecordRaw[] {
 export function pathMapToMenu(
   userMenus: IMenu[] | IMenuChild[],
   currentPath: string,
-  breadcrumbs?: IBreadcrumb[]
+  breadcrumbs?: any[]
 ): any {
   for (const menu of userMenus) {
     if (menu.type === 1) {
@@ -70,9 +69,26 @@ export function pathMapBreadcrumbs(
   userMenus: IMenu[] | IMenuChild[],
   currentPath: string
 ): any {
-  const breadcrumbs: IBreadcrumb[] = []
+  const breadcrumbs: any[] = []
   pathMapToMenu(userMenus, currentPath, breadcrumbs)
   return breadcrumbs
+}
+
+//用于验证按钮权限
+export function mapMenuToPermissions(userMenus: IMenu[] | IMenuChild[]) {
+  const permissions: string[] = []
+
+  const getPermissions = (menus: any[]) => {
+    for (const menu of menus) {
+      if (menu.type === 1 || menu.type === 2) {
+        getPermissions(menu.children ?? [])
+      } else if (menu.type === 3) {
+        permissions.push(menu.permission)
+      }
+    }
+  }
+  getPermissions(userMenus)
+  return permissions
 }
 
 export { firstMenu, firstRoute }

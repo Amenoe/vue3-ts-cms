@@ -10,13 +10,14 @@
       <!-- header中的插槽 -->
       <template #headerHandler>
         <el-button
+          v-if="isCreate"
           plain
-          @click="handlerNewUser"
+          @click="handleNewUser"
           type="primary"
           icon="el-icon-plus"
-          >新增</el-button
+          >新建</el-button
         >
-        <el-button plain @click="handlerRefresh" icon="el-icon-refresh"
+        <el-button plain @click="handleRefresh" icon="el-icon-refresh"
           >刷新</el-button
         >
       </template>
@@ -27,12 +28,24 @@
       <template #updateAt="scope">
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
-      <template #handler>
+      <template #handler="scope">
         <div class="handle-btn">
-          <el-button icon="el-icon-edit" size="small" type="primary" link
+          <el-button
+            v-if="isUpdate"
+            icon="el-icon-edit"
+            size="small"
+            type="primary"
+            link
+            @click="handleEditClick(scope.row)"
             >编辑</el-button
           >
-          <el-button icon="el-icon-delete" size="small" type="primary" link
+          <el-button
+            v-if="isDelete"
+            icon="el-icon-delete"
+            size="small"
+            type="primary"
+            link
+            @click="handleDeleteClick(scope.row)"
             >删除</el-button
           >
         </div>
@@ -57,6 +70,7 @@ import type { PropType } from 'vue'
 import ContentTable from '@/baseui/table/table.vue'
 import type { IPageTable } from '@/baseui/table/type'
 import useSystemStore from '@/stores/modules/system'
+import { usePermission } from '@/hooks/usePermission'
 
 const props = defineProps({
   pageTableConfig: {
@@ -77,8 +91,15 @@ const dataList = computed(() => systemStore.pageListData(props.pageName))
 const dataCount = computed(() => systemStore.pageListDataCount(props.pageName))
 const pageInfo = ref({ currentPage: 1, pageSize: 10 })
 
+//判断用户的按钮权限
+const isCreate = usePermission(props.pageName, 'create')
+const isUpdate = usePermission(props.pageName, 'update')
+const isDelete = usePermission(props.pageName, 'delete')
+const isQuery = usePermission(props.pageName, 'query')
+
 //调用pinia中的网络请求
 const getPageData = (queryInfo: any = {}) => {
+  if (!isQuery) return
   systemStore.getPageListAction({
     // pageUrl: 'users/list',
     pageName: props.pageName,
@@ -103,19 +124,31 @@ const pagePropSlots: any = props.pageTableConfig.propList.filter((item) => {
   if (item.slotName === 'handler') return false
   return true
 })
-//处理列表子组件返回的数据
+//处理列表多选框返回的数据
 const tableSelect = (selection: any) => {
   console.log(selection)
 }
+
 //新建用户
-const handlerNewUser = () => {
+const handleNewUser = () => {
   console.log('click new user')
 }
 //刷新列表
-const handlerRefresh = () => {
+const handleRefresh = () => {
   console.log('click refresh')
 }
 
+//点击编辑
+const handleEditClick = (item: any) => {
+  console.log('click edit', item)
+}
+//点击删除
+const handleDeleteClick = (item: any) => {
+  systemStore.deletePageDataAction({
+    pageName: props.pageName,
+    id: item.id
+  })
+}
 defineExpose({
   getPageData
 })

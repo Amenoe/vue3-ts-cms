@@ -1,6 +1,6 @@
 import request from '../index'
 
-import type { Account, LoginInfo } from './types'
+import type { Account, LoginInfo } from '../types'
 
 enum LoginAPI {
   AccountLogin = '/login',

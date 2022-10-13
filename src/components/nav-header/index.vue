@@ -71,7 +71,7 @@ const handleFoldClick = () => {
 
 const logout = () => {
   //弹出退出确认
-  ElMessageBox.confirm('确认注销并退出系统吗', 'Warning', {
+  ElMessageBox.confirm('确认注销并退出系统吗', '警告', {
     confirmButtonText: 'OK',
     cancelButtonText: 'Cancel',
     type: 'warning'

@@ -8,18 +8,20 @@ import {
 import type { IAccount, IMenu } from '../type'
 
 import router from '@/router'
-import { mapMenuToRoutes } from '@/utils/map-menus'
+import { mapMenuToRoutes, mapMenuToPermissions } from '@/utils/map-menus'
 
 const useLoginStore = defineStore('login', {
   state: (): {
     token: string
     userInfo: { name?: string }
     userMenus: IMenu[]
+    permissions: string[]
   } => {
     return {
       token: '',
       userInfo: {},
-      userMenus: []
+      userMenus: [],
+      permissions: []
     }
   },
   getters: {},
@@ -45,8 +47,9 @@ const useLoginStore = defineStore('login', {
       const userMenus = userMenusResult
       this.userMenus = userMenus
       localCache.setCache('userMenus', userMenus)
-      //登录请求时生成路由表
-      this.addMenusToRoute()
+      //登录请求时生成路由表和按钮权限
+      this.addMenusToRoute(userMenus)
+      this.getUserPermission(userMenus)
       router.push('/main')
     },
     phoneLoginAction() {
@@ -66,18 +69,24 @@ const useLoginStore = defineStore('login', {
       const userMenus = localCache.getCache('userMenus')
       if (userMenus) {
         this.userMenus = userMenus
-        //每次刷新时生成路由表
-        this.addMenusToRoute()
+        //每次刷新时生成路由表和按钮权限
+        this.addMenusToRoute(userMenus)
+        this.getUserPermission(userMenus)
       }
     },
     //生成用户路由表
-    addMenusToRoute() {
+    addMenusToRoute(userMenus: any[]) {
       //根据权限动态生成路由表
-      const routes = mapMenuToRoutes(this.userMenus)
+      const routes = mapMenuToRoutes(userMenus)
       //将routes添加到main.children下
       routes.forEach((route) => {
         router.addRoute('main', route)
       })
+    },
+    //判断用户按钮权限
+    getUserPermission(userMenus: any[]) {
+      this.permissions = mapMenuToPermissions(userMenus)
+      console.log(this.permissions)
     }
   }
 })

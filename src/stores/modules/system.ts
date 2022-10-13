@@ -1,22 +1,22 @@
 import { defineStore } from 'pinia'
-import { getPageList } from '@/service/main/system/system'
-import type { IPageListPayload } from '../type'
+import { deletePageData, getPageList } from '@/service/main/system/system'
+import type { IDeletePageDataPayload, IGetPageListPayload } from '../type'
 //系统模块store,还包括了故事和商品信息
 const useSystemStore = defineStore('system', {
   state: () => {
     return {
-      usersList: [],
+      usersList: [{}],
       usersTotalCount: 0,
-      departmentList: [],
+      departmentList: [{}],
       departmentTotalCount: 0,
-      roleList: [],
+      roleList: [{}],
       roleTotalCount: 0,
-      menuList: [],
-      categoryList: [],
+      menuList: [{}],
+      categoryList: [{}],
       categoryTotalCount: 0,
-      goodsList: [],
+      goodsList: [{}],
       goodsTotalCount: 0,
-      storyList: [],
+      storyList: [{}],
       storyTotalCount: 0
     }
   },
@@ -36,13 +36,11 @@ const useSystemStore = defineStore('system', {
     }
   },
   actions: {
-    //页面发送请求
-    async getPageListAction(payload: IPageListPayload) {
-      const pageName = payload.pageName
-      const pageResult = await getPageList(
-        `${payload.pageName}/list`,
-        payload.queryInfo
-      )
+    //获取页面数据
+    async getPageListAction(payload: IGetPageListPayload) {
+      const { pageName, queryInfo } = payload
+      //发送网络请求
+      const pageResult = await getPageList(`${pageName}/list`, queryInfo)
       console.log(pageResult)
       //保存数据到state中
       const { list, totalCount } = pageResult
@@ -63,6 +61,21 @@ const useSystemStore = defineStore('system', {
           this.goodsTotalCount = totalCount
           break
       }
+    },
+
+    async deletePageDataAction(payload: IDeletePageDataPayload) {
+      const { pageName, id } = payload
+      const pageUrl = `/${pageName}/${id}`
+      //发送删除的网络请求
+      await deletePageData(pageUrl)
+      //重新请求数据
+      this.getPageListAction({
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
     }
   }
 })

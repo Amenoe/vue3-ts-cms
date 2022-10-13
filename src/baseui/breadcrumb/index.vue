@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 
-export interface IBreadcrumb {
+interface IBreadcrumb {
   name: string
   path?: string
 }
