@@ -13,15 +13,15 @@
             >重置</el-button
           >
         </div>
-      </template></Form
-    >
+      </template>
+    </Form>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import type { ISearchForm } from '@/baseui/form/type'
-import Form from '../../baseui/form/form.vue'
+import Form from '@/baseui/form/form.vue'
 
 const props = defineProps({
   searchFormConfig: {
@@ -33,28 +33,33 @@ const props = defineProps({
     default: '高级检索'
   }
 })
-//动态获取回传数据的属性
-const originFormData: any = {}
-const formItems = props.searchFormConfig.formItems ?? []
-for (const formItem of formItems) {
-  originFormData[formItem.field] = ''
-}
-const formData = ref({ ...originFormData })
+//动态获取formData的属性
+// const originFormData: any = {}
+// const formItems = props.searchFormConfig.formItems ?? []
+// for (const formItem of formItems) {
+//   originFormData[formItem.field] = ''
+// }
+// const formData = ref({ ...originFormData })
+
+const formData = ref<any>({})
 
 const emit = defineEmits(['resetClick', 'searchClick'])
 
 //点击重置
 const handleResetClick = () => {
-  // formData.value = originFormData
   //通过修改对象内的值，直接影响子组件(子组件中使用浅拷贝所以是同一个对象)
-  for (const key in originFormData) {
-    formData.value[key] = originFormData[key]
+  // for (const key in originFormData) {
+  // formData.value[key] = originFormData[key]
+  // }
+  for (const key in formData.value) {
+    formData.value[key] = ''
   }
   emit('resetClick')
 }
 
 //点击搜索
 const handleSearchClick = () => {
+  console.log(formData.value)
   emit('searchClick', formData.value)
 }
 </script>

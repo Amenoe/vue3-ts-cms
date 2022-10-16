@@ -6,8 +6,8 @@ import {
   getUserMenus
 } from '@/service/login/login'
 import type { IAccount, IMenu } from '../type'
-
 import router from '@/router'
+
 import { mapMenuToRoutes, mapMenuToPermissions } from '@/utils/map-menus'
 
 const useLoginStore = defineStore('login', {
@@ -50,7 +50,6 @@ const useLoginStore = defineStore('login', {
       //登录请求时生成路由表和按钮权限
       this.addMenusToRoute(userMenus)
       this.getUserPermission(userMenus)
-      router.push('/main')
     },
     phoneLoginAction() {
       console.log('电话登录')
@@ -86,7 +85,6 @@ const useLoginStore = defineStore('login', {
     //判断用户按钮权限
     getUserPermission(userMenus: any[]) {
       this.permissions = mapMenuToPermissions(userMenus)
-      console.log(this.permissions)
     }
   }
 })

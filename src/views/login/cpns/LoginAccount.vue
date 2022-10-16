@@ -1,3 +1,4 @@
+<!-- eslint-disable no-undef -->
 <template>
   <div class="login-account">
     <!-- 通过model将loginForm的值给el-form用于校验，ref用于登录验证 -->
@@ -24,6 +25,7 @@ import localCache from '@/utils/cache'
 import useLoginStore from '@/stores/modules/login'
 
 import type { FormInstance } from 'element-plus'
+import router from '@/router'
 
 const loginRef = ref<FormInstance>()
 
@@ -69,7 +71,15 @@ const loginAction = (rememberPsw: boolean) => {
 
       //2. 开始登录验证
       const loginStore = useLoginStore()
-      loginStore.accountLoginRequestAction(loginForm.value)
+      loginStore
+        .accountLoginRequestAction(loginForm.value)
+        .then(() => {
+          router.push('/main')
+          ElMessage.success('登录成功')
+        })
+        .catch(() => {
+          ElMessage.error('登录失败')
+        })
     }
   })
 }

@@ -12,11 +12,12 @@
         <el-button
           v-if="isCreate"
           plain
-          @click="handleNewUser"
+          @click="handleNewClick"
           type="primary"
           icon="el-icon-plus"
-          >新建</el-button
         >
+          新建
+        </el-button>
         <el-button plain @click="handleRefresh" icon="el-icon-refresh"
           >刷新</el-button
         >
@@ -71,6 +72,7 @@ import ContentTable from '@/baseui/table/table.vue'
 import type { IPageTable } from '@/baseui/table/type'
 import useSystemStore from '@/stores/modules/system'
 import { usePermission } from '@/hooks/usePermission'
+import { useMessageBox } from '@/hooks/useMessageBox'
 
 const props = defineProps({
   pageTableConfig: {
@@ -124,29 +126,41 @@ const pagePropSlots: any = props.pageTableConfig.propList.filter((item) => {
   if (item.slotName === 'handler') return false
   return true
 })
+
+const emits = defineEmits(['NewClick', 'EditClick'])
 //处理列表多选框返回的数据
 const tableSelect = (selection: any) => {
   console.log(selection)
 }
 
-//新建用户
-const handleNewUser = () => {
+//TODO 新建用户
+const handleNewClick = () => {
+  emits('NewClick')
   console.log('click new user')
 }
-//刷新列表
+//TODO 刷新列表
 const handleRefresh = () => {
   console.log('click refresh')
 }
 
-//点击编辑
+//TODO 点击编辑
 const handleEditClick = (item: any) => {
-  console.log('click edit', item)
+  emits('EditClick', item)
 }
 //点击删除
 const handleDeleteClick = (item: any) => {
-  systemStore.deletePageDataAction({
-    pageName: props.pageName,
-    id: item.id
+  useMessageBox('确定要删除该用户吗', '警告').then(() => {
+    systemStore
+      .deletePageDataAction({
+        pageName: props.pageName,
+        id: item.id
+      })
+      .then(() => {
+        ElMessage.success('删除成功')
+      })
+      .catch(() => {
+        ElMessage.info('取消删除')
+      })
   })
 }
 defineExpose({

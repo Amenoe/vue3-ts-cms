@@ -42,6 +42,8 @@ export default defineConfig(({ mode }) => {
         }
       }),
       Components({
+        //自动引入组件的位置，默认是src/components
+        dirs: ['src/components'],
         resolvers: [
           // Auto register icon components
           // 自动注册图标组件

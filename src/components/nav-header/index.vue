@@ -6,7 +6,7 @@
     <div class="content">
       <Breadcrumb :breadcrumb="breadcrumbs" class="nav-breadcrumb" />
       <div class="user-info">
-        <el-dropdown>
+        <el-dropdown trigger="click">
           <span>
             <el-avatar :size="22" :src="avatarUrl" />
             <el-icon class="el-icon--right">
@@ -32,10 +32,11 @@
 
 <script setup lang="ts">
 import useLoginStore from '@/stores/modules/login'
-import Breadcrumb from '@/baseui/breadcrumb/index.vue'
+import Breadcrumb from '@/baseui/breadcrumb/breadcrumb.vue'
+import router from '@/router'
 import { pathMapBreadcrumbs } from '@/utils/map-menus'
 import localCache from '@/utils/cache'
-import router from '@/router'
+import { useMessageBox } from '@/hooks/useMessageBox'
 
 //声明触发的事件
 const emit = defineEmits(['foldChange'])
@@ -71,14 +72,23 @@ const handleFoldClick = () => {
 
 const logout = () => {
   //弹出退出确认
-  ElMessageBox.confirm('确认注销并退出系统吗', '警告', {
-    confirmButtonText: 'OK',
-    cancelButtonText: 'Cancel',
-    type: 'warning'
-  }).then(() => {
-    localCache.clearCache()
-    router.push('/main')
-  })
+  // ElMessageBox.confirm('确认注销并退出系统吗', '警告', {
+  //   confirmButtonText: '确认',
+  //   cancelButtonText: '取消',
+  //   type: 'warning'
+  // }).then(() => {
+  //   localCache.clearCache()
+  //   router.push('/main')
+  // })
+  useMessageBox('确定注销并退出系统吗', '警告')
+    .then(() => {
+      localCache.clearCache()
+      router.push('/main')
+      ElMessage.success('退出成功')
+    })
+    .catch(() => {
+      ElMessage.info('取消退出')
+    })
 }
 </script>
 
