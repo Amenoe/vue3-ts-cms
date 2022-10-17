@@ -2,8 +2,8 @@
   <div class="user">
     <SearchForm
       :search-form-config="searchFormConfig"
-      @resetClick="resetClick"
-      @searchClick="searchClick"
+      @reset-click="resetClick"
+      @search-click="searchClick"
     >
     </SearchForm>
     <PageTable
@@ -23,8 +23,9 @@
       </template>
     </PageTable>
     <PageDialog
-      :dialogForm="dialogForm"
-      :defaultInfo="defaultInfo"
+      :dialog-form-config="dialogFormConfig"
+      :default-info="defaultInfo"
+      :dialog-title="dialogTitle"
       ref="pageDialogRef"
     ></PageDialog>
   </div>
@@ -38,6 +39,7 @@ import PageDialog from '@/components/page-dialog/index.vue'
 import type { ISearchForm } from '@/baseui/form/type'
 import type { IPageTable } from '@/baseui/table/type'
 import { usePageSearch } from '@/hooks/usePageSearch'
+import { usePageDialog } from '@/hooks/usePageDialog'
 
 //搜索组件的配置
 const searchFormConfig: ISearchForm = {
@@ -110,8 +112,9 @@ const pageTableConfig: IPageTable = {
   showIndexColumn: true
 }
 
-//新建用户表单
-const dialogForm: ISearchForm = {
+//对话框表单配置
+const dialogTitle = ref('')
+const dialogFormConfig: ISearchForm = {
   formItems: [
     {
       field: 'name',
@@ -142,26 +145,29 @@ const dialogForm: ISearchForm = {
   itemStyle: { padding: '5px 0px' }
 }
 
-//默认的dialog数据
-const defaultInfo = ref({})
+//dialog相关hook
+const newCallBack = () => {
+  dialogTitle.value = '新建用户'
+  const passwordItem = dialogFormConfig.formItems.find(
+    (item) => item.field === 'password'
+  )
+  console.log(passwordItem)
+  passwordItem!.isHidden = false
+}
+
+const editCallBack = () => {
+  dialogTitle.value = '编辑用户'
+  const passwordItem = dialogFormConfig.formItems.find(
+    (item) => item.field === 'password'
+  )
+  console.log(passwordItem)
+
+  passwordItem!.isHidden = true
+}
 
 const { pageTableRef, resetClick, searchClick } = usePageSearch()
-
-const pageDialogRef = ref<InstanceType<typeof PageDialog>>()
-
-const handleNewClick = () => {
-  if (pageDialogRef.value) {
-    pageDialogRef.value.dialogVisible = true
-  }
-}
-
-const handleEditClick = (item: any) => {
-  defaultInfo.value = { ...item }
-  console.log(item)
-  if (pageDialogRef.value) {
-    pageDialogRef.value.dialogVisible = true
-  }
-}
+const { pageDialogRef, defaultInfo, handleNewClick, handleEditClick } =
+  usePageDialog(newCallBack, editCallBack)
 </script>
 
 <style scoped lang="less"></style>

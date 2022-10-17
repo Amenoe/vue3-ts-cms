@@ -24,6 +24,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'vue/multi-word-component-names': 'off', //关闭组件名多字检测
     '@typescript-eslint/no-explicit-any': 'off', //关闭any类型的检测
-    '@typescript-eslint/no-explicit-unknow': 'off' //关闭any类型的检测
+    '@typescript-eslint/no-explicit-unknow': 'off', //关闭any类型的检测
+    '@typescript-eslint/no-non-null-assertion': 'off' //关闭非空断言检测
   }
 }

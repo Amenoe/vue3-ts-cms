@@ -16,7 +16,7 @@
           type="primary"
           icon="el-icon-plus"
         >
-          新建
+          新增
         </el-button>
         <el-button plain @click="handleRefresh" icon="el-icon-refresh"
           >刷新</el-button

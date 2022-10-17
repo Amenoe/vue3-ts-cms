@@ -17,7 +17,11 @@
                 enter-from-class="fade-transform-enter"
               >
                 <keep-alive>
-                  <component :is="Component" :key="route.path"></component>
+                  <component
+                    :is="Component"
+                    :key="route.path"
+                    v-if="!route.meta.link"
+                  ></component>
                 </keep-alive>
               </transition>
             </router-view>
@@ -48,6 +52,7 @@ const handleFoldChange = (isFold: boolean) => {
     height: 100%;
     .page-content {
       height: calc(100% - 48px);
+      padding: 12px;
       .page-info {
         border-radius: 6px;
       }

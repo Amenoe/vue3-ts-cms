@@ -23,7 +23,7 @@ import type { PropType } from 'vue'
 import type { ISearchForm } from '@/baseui/form/type'
 import Form from '@/baseui/form/form.vue'
 
-const props = defineProps({
+defineProps({
   searchFormConfig: {
     type: Object as PropType<ISearchForm>,
     required: true

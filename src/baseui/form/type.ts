@@ -10,6 +10,8 @@ export interface IFormItem {
   options?: any[]
   //针对特殊的属性
   otherOptions?: object
+  //是否在表单中显示这个属性
+  isHidden?: boolean
 }
 
 export interface ISearchForm {

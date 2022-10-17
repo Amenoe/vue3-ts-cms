@@ -8,6 +8,7 @@
         <template v-for="item in formItems" :key="item.label">
           <el-col v-bind="colLayout">
             <el-form-item
+              v-if="!item.isHidden"
               :label="item.label"
               :rules="item.rules"
               :style="itemStyle"
@@ -109,7 +110,7 @@ watch(
 
 <style lang="less" scoped>
 .form {
-  padding: 22px;
+  padding: 12px 22px;
   border-radius: 6px;
   background-color: #fff;
 }

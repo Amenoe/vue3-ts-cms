@@ -1,13 +1,13 @@
 <template>
   <div class="page-dialog">
     <el-dialog
-      title="新建用户"
+      :title="dialogTitle"
       width="30%"
       v-model="dialogVisible"
       center
       destroy-on-close
     >
-      <Form v-bind="dialogForm" v-model="formData"></Form>
+      <Form v-bind="dialogFormConfig" v-model="formData"></Form>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
@@ -24,13 +24,17 @@ import type { ISearchForm } from '@/baseui/form/type'
 import type { PropType } from 'vue'
 
 const props = defineProps({
-  dialogForm: {
+  dialogFormConfig: {
     type: Object as PropType<ISearchForm>,
     require: true
   },
   defaultInfo: {
     type: Object,
     default: () => ({})
+  },
+  dialogTitle: {
+    type: String,
+    default: ''
   }
 })
 //用于接收Form组件回传的数据
