@@ -1,8 +1,3 @@
-export interface ISystemState {
-  userList: any[]
-  userCount: []
-}
-
 export interface IGetPageListPayload {
   pageName: string
   queryInfo: any

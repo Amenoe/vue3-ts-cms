@@ -10,6 +10,6 @@ export interface LoginInfo {
 }
 
 export interface IDataType {
-  list: object[]
+  list: any[]
   totalCount: number
 }

@@ -94,12 +94,11 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 //表单数据回传
 const formData = ref({ ...props.modelValue })
-console.log(formData.value)
+
 //监听表单的改变，发送给父组件修改
 watch(
   formData,
   (newValue) => {
-    console.log(formData.value)
     emit('update:modelValue', newValue)
   },
   {

@@ -23,7 +23,7 @@
       </template>
     </PageTable>
     <PageDialog
-      :dialog-form-config="dialogFormConfig"
+      :dialog-form-config="dialogFormConfigRef"
       :default-info="defaultInfo"
       :dialog-title="dialogTitle"
       ref="pageDialogRef"
@@ -40,6 +40,7 @@ import type { ISearchForm } from '@/baseui/form/type'
 import type { IPageTable } from '@/baseui/table/type'
 import { usePageSearch } from '@/hooks/usePageSearch'
 import { usePageDialog } from '@/hooks/usePageDialog'
+import useInformationStore from '@/stores/modules/information'
 
 //搜索组件的配置
 const searchFormConfig: ISearchForm = {
@@ -139,11 +140,46 @@ const dialogFormConfig: ISearchForm = {
       type: 'input',
       label: '电话号码',
       placeholder: '请输入电话号码'
+    },
+    {
+      field: 'departmentId',
+      type: 'select',
+      label: '选择部门',
+      placeholder: '请选择部门',
+      options: []
+    },
+    {
+      field: 'roleId',
+      type: 'select',
+      label: '选择角色',
+      placeholder: '请选择角色',
+      options: []
     }
   ],
   colLayout: { span: 24 },
   itemStyle: { padding: '5px 0px' }
 }
+
+const informationStore = useInformationStore()
+
+//如果网络请求在页面之后，使数据能够正常显示
+const dialogFormConfigRef = computed(() => {
+  //动态添加部门和角色列表
+  const departmentItem = dialogFormConfig.formItems.find(
+    (item) => item.field === 'departmentId'
+  )
+  departmentItem!.options = informationStore.entireDepartment.map((item) => {
+    return { label: item.name, value: item.id }
+  })
+
+  const roleItem = dialogFormConfig.formItems.find(
+    (item) => item.field === 'roleId'
+  )
+  roleItem!.options = informationStore.entireRole.map((item) => {
+    return { label: item.name, value: item.id }
+  })
+  return dialogFormConfig
+})
 
 //dialog相关hook
 const newCallBack = () => {
@@ -165,6 +201,7 @@ const editCallBack = () => {
   passwordItem!.isHidden = true
 }
 
+//调用hooks中的公共函数
 const { pageTableRef, resetClick, searchClick } = usePageSearch()
 const { pageDialogRef, defaultInfo, handleNewClick, handleEditClick } =
   usePageDialog(newCallBack, editCallBack)
