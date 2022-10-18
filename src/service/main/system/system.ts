@@ -14,3 +14,17 @@ export function deletePageData(pageUrl: string) {
     url: pageUrl
   })
 }
+
+export function createPageData(pageUrl: string, newData: any) {
+  return request.post<IDataType>({
+    url: pageUrl,
+    data: newData
+  })
+}
+
+export function editPageData(pageUrl: string, editData: any) {
+  return request.patch<IDataType>({
+    url: pageUrl,
+    data: editData
+  })
+}

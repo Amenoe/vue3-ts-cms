@@ -1,5 +1,10 @@
 import { defineStore } from 'pinia'
-import { deletePageData, getPageList } from '@/service/main/system/system'
+import {
+  deletePageData,
+  getPageList,
+  createPageData,
+  editPageData
+} from '@/service/main/system/system'
 import type { IDeletePageDataPayload, IGetPageListPayload } from '../type'
 //系统模块store,还包括了故事和商品信息
 const useSystemStore = defineStore('system', {
@@ -62,12 +67,44 @@ const useSystemStore = defineStore('system', {
       }
     },
 
+    //删除的网络请求
     async deletePageDataAction(payload: IDeletePageDataPayload) {
       const { pageName, id } = payload
       const pageUrl = `/${pageName}/${id}`
       //发送删除的网络请求
       await deletePageData(pageUrl)
       //重新请求数据
+      this.getPageListAction({
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
+    },
+
+    //新建的网络请求
+    async createPageDataAction(payload: any) {
+      const { pageName, newData } = payload
+      const pageUrl = `${pageName}`
+      await createPageData(pageUrl, newData)
+      //创建后重新请求数据
+      this.getPageListAction({
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
+    },
+
+    //编辑的网络请求
+    async editPageDataAction(payload: any) {
+      const { pageName, editData, id } = payload
+      const pageUrl = `${pageName}/${id}`
+      console.log(pageUrl)
+      await editPageData(pageUrl, editData)
+      //创建后重新请求数据
       this.getPageListAction({
         pageName,
         queryInfo: {

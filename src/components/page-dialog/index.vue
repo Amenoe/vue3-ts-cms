@@ -11,7 +11,7 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="handleNewData">确定</el-button>
+          <el-button type="primary" @click="handleConfirmClick">确定</el-button>
         </span>
       </template>
     </el-dialog>
@@ -20,6 +20,7 @@
 
 <script setup lang="ts">
 import Form from '@/baseui/form/form.vue'
+import useSystemStore from '@/stores/modules/system'
 import type { ISearchForm } from '@/baseui/form/type'
 import type { PropType } from 'vue'
 
@@ -48,18 +49,37 @@ const formData = ref<any>({})
 watch(
   () => props.defaultInfo,
   (newValue) => {
-    // for (const item of props.dialogForm.formItems) {
-    //   formData.value[`${item.field}`] = newValue[`${item.field}`]
-    // }
-    formData.value = newValue
+    //只绑定dialog中有的数据，不然多余参数可能影响修改(比如updateAt就不能修改)
+    for (const item of (props.dialogFormConfig as any).formItems) {
+      formData.value[`${item.field}`] = newValue[`${item.field}`]
+    }
+    // formData.value = newValue
   }
 )
-
+const systemStore = useSystemStore()
 //dialog
 const dialogVisible = ref(false)
+
 //TODO dialog confirm
-const handleNewData = () => {
+const handleConfirmClick = () => {
   console.log(formData.value)
+  //使用Object.keys将对象的key转为数组
+  if (Object.keys(props.defaultInfo).length) {
+    //编辑
+    systemStore.editPageDataAction({
+      pageName: props.pageName,
+      editData: { ...formData.value },
+      id: props.defaultInfo.id
+    })
+  } else {
+    //新建
+    systemStore.createPageDataAction({
+      pageName: props.pageName,
+      newData: { ...formData.value }
+    })
+  }
+
+  dialogVisible.value = false
 }
 
 defineExpose({
