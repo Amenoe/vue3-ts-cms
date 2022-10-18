@@ -35,8 +35,13 @@ const props = defineProps({
   dialogTitle: {
     type: String,
     default: ''
+  },
+  pageName: {
+    type: String,
+    required: true
   }
 })
+
 //用于接收Form组件回传的数据
 const formData = ref<any>({})
 //点击编辑显示时默认显示item的数据

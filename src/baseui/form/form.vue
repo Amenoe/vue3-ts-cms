@@ -3,7 +3,7 @@
     <div class="header">
       <slot name="header"></slot>
     </div>
-    <el-form :label-width="labelWidth">
+    <el-form :label-width="labelWidth" :model="formData">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
           <el-col v-bind="colLayout">
@@ -12,6 +12,7 @@
               :label="item.label"
               :rules="item.rules"
               :style="itemStyle"
+              :prop="item.field"
               class="form-item"
             >
               <template
@@ -94,11 +95,13 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 //表单数据回传
 const formData = ref({ ...props.modelValue })
+console.log(props.modelValue)
 
 //监听表单的改变，发送给父组件修改
 watch(
   formData,
   (newValue) => {
+    console.log(formData.value)
     emit('update:modelValue', newValue)
   },
   {

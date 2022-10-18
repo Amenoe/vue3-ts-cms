@@ -26,6 +26,7 @@
       :dialog-form-config="dialogFormConfigRef"
       :default-info="defaultInfo"
       :dialog-title="dialogTitle"
+      :page-name="pageName"
       ref="pageDialogRef"
     ></PageDialog>
   </div>
@@ -121,7 +122,14 @@ const dialogFormConfig: ISearchForm = {
       field: 'name',
       label: '用户名',
       type: 'input',
-      placeholder: '请输入用户名'
+      placeholder: '请输入用户名',
+      rules: [
+        {
+          required: true,
+          message: '用户名不能为空',
+          trigger: 'blur'
+        }
+      ]
     },
     {
       field: 'realname',
@@ -133,7 +141,8 @@ const dialogFormConfig: ISearchForm = {
       field: 'password',
       label: '密码',
       type: 'input',
-      placeholder: '请输入密码'
+      placeholder: '请输入密码',
+      rules: [{ required: true, message: '密码不能为空', trigger: 'blur' }]
     },
     {
       field: 'cellphone',
@@ -187,7 +196,6 @@ const newCallBack = () => {
   const passwordItem = dialogFormConfig.formItems.find(
     (item) => item.field === 'password'
   )
-  console.log(passwordItem)
   passwordItem!.isHidden = false
 }
 
@@ -196,8 +204,6 @@ const editCallBack = () => {
   const passwordItem = dialogFormConfig.formItems.find(
     (item) => item.field === 'password'
   )
-  console.log(passwordItem)
-
   passwordItem!.isHidden = true
 }
 

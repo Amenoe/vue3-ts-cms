@@ -2,8 +2,8 @@
   "globals": {
     "EffectScope": true,
     "ElLoading": true,
-    "ElMessageBox": true,
     "ElMessage": true,
+    "ElMessageBox": true,
     "computed": true,
     "createApp": true,
     "customRef": true,

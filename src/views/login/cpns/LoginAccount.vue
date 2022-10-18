@@ -45,14 +45,7 @@ const loginRules = {
       message: '请输入3到10位字母或数字'
     }
   ],
-  password: [
-    { required: true, trigger: 'blur', message: '请输入您的密码' },
-    {
-      pattern: /^[A-Za-z0-9]{3,10}$/,
-      trigger: 'blur',
-      message: '请输入3到10位字母或数字'
-    }
-  ]
+  password: [{ required: true, trigger: 'blur', message: '请输入您的密码' }]
 }
 const loginAction = (rememberPsw: boolean) => {
   //el-form的验证，通过返回true，不通过返回false
