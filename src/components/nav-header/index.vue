@@ -71,15 +71,6 @@ const handleFoldClick = () => {
 }
 
 const logout = () => {
-  //弹出退出确认
-  // ElMessageBox.confirm('确认注销并退出系统吗', '警告', {
-  //   confirmButtonText: '确认',
-  //   cancelButtonText: '取消',
-  //   type: 'warning'
-  // }).then(() => {
-  //   localCache.clearCache()
-  //   router.push('/main')
-  // })
   useMessageBox('确定注销并退出系统吗', '警告')
     .then(() => {
       localCache.clearCache()

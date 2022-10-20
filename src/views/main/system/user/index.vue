@@ -148,7 +148,17 @@ const dialogFormConfig: ISearchForm = {
       field: 'cellphone',
       type: 'input',
       label: '电话号码',
-      placeholder: '请输入电话号码'
+      placeholder: '请输入电话号码',
+      rules: [
+        {
+          pattern: /^1[0-9]{10}$/,
+          message: '请输入正确的手机号',
+          trigger: 'blur'
+        }
+      ],
+      otherOptions: {
+        maxlength: '11'
+      }
     },
     {
       field: 'departmentId',

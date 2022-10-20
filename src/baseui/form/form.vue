@@ -3,7 +3,7 @@
     <div class="header">
       <slot name="header"></slot>
     </div>
-    <el-form :label-width="labelWidth" :model="formData">
+    <el-form :label-width="labelWidth" :model="formData" ref="elFormRef">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
           <el-col v-bind="colLayout">
@@ -52,13 +52,15 @@
         </template>
       </el-row>
     </el-form>
+
     <div class="footer">
-      <slot name="footer"></slot>
+      <slot name="footer"> </slot>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { FormInstance } from 'element-plus'
 import type { PropType } from 'vue'
 import type { IFormItem } from './type'
 
@@ -106,6 +108,14 @@ watch(
     deep: true
   }
 )
+
+//表单实例，用于校验
+const elFormRef = ref<FormInstance>()
+
+defineExpose({
+  // formValidate
+  elFormRef
+})
 </script>
 
 <style lang="less" scoped>

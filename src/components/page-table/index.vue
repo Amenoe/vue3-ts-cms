@@ -136,11 +136,11 @@ const tableSelect = (selection: any) => {
 //TODO 新建用户
 const handleNewClick = () => {
   emits('NewClick')
-  console.log('click new user')
 }
 //TODO 刷新列表
 const handleRefresh = () => {
-  console.log('click refresh')
+  getPageData()
+  ElMessage.success('刷新成功')
 }
 
 //TODO 点击编辑
@@ -150,17 +150,10 @@ const handleEditClick = (item: any) => {
 //点击删除
 const handleDeleteClick = (item: any) => {
   useMessageBox('确定要删除该用户吗', '警告').then(() => {
-    systemStore
-      .deletePageDataAction({
-        pageName: props.pageName,
-        id: item.id
-      })
-      .then(() => {
-        ElMessage.success('删除成功')
-      })
-      .catch(() => {
-        ElMessage.info('取消删除')
-      })
+    systemStore.deletePageDataAction({
+      pageName: props.pageName,
+      id: item.id
+    })
   })
 }
 defineExpose({

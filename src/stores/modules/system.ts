@@ -72,7 +72,16 @@ const useSystemStore = defineStore('system', {
       const { pageName, id } = payload
       const pageUrl = `/${pageName}/${id}`
       //发送删除的网络请求
-      await deletePageData(pageUrl)
+      await deletePageData(pageUrl).then(
+        (res) => {
+          console.log(res)
+          ElMessage.success('删除成功')
+        },
+        (rej) => {
+          console.log(rej)
+          ElMessage.error('删除失败')
+        }
+      )
       //重新请求数据
       this.getPageListAction({
         pageName,
@@ -83,7 +92,7 @@ const useSystemStore = defineStore('system', {
       })
     },
 
-    //新建的网络请求
+    //新增的网络请求
     async createPageDataAction(payload: any) {
       const { pageName, newData } = payload
       const pageUrl = `${pageName}`
@@ -104,6 +113,19 @@ const useSystemStore = defineStore('system', {
       const pageUrl = `${pageName}/${id}`
       console.log(pageUrl)
       await editPageData(pageUrl, editData)
+        .then(
+          (res) => {
+            console.log(res)
+            ElMessage.success('编辑成功')
+          },
+          (rej) => {
+            console.log(rej)
+            ElMessage.error('编辑失败')
+          }
+        )
+        .catch(() => {
+          console.log('catch')
+        })
       //创建后重新请求数据
       this.getPageListAction({
         pageName,

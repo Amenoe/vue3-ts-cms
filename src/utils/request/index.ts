@@ -42,23 +42,23 @@ class Request {
             spinner: 'el-icon-loading',
             background: 'rgba(0, 0, 0, 0.7)'
           })
+          console.log('执行Loading')
         }
         return config
       },
       (err) => {
-        console.log('请求失败')
         return err
       }
     )
 
     this.instance.interceptors.response.use(
       (res) => {
+        //TODO 网络失败判断
         //请求到数据将loading移除
         this.loadingInstance?.close()
         return res
       },
       (err) => {
-        console.log('响应失败')
         this.loadingInstance?.close()
         return err
       }
@@ -75,10 +75,12 @@ class Request {
       this.instance
         .request<any, ResultData<T>>(config)
         .then((res) => {
+          console.log(res)
           resolve(res.data)
           this.showLoading = true
         })
         .catch((err) => {
+          console.log('服务器未响应')
           reject(err)
           this.showLoading = true
         })
