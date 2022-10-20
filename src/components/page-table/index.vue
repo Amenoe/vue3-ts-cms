@@ -133,17 +133,14 @@ const tableSelect = (selection: any) => {
   console.log(selection)
 }
 
-//TODO 新建用户
 const handleNewClick = () => {
   emits('NewClick')
 }
-//TODO 刷新列表
 const handleRefresh = () => {
   getPageData()
   ElMessage.success('刷新成功')
 }
 
-//TODO 点击编辑
 const handleEditClick = (item: any) => {
   emits('EditClick', item)
 }

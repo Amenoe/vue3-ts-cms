@@ -26,7 +26,9 @@ class Request {
       this.interceptors?.requestInterceptorCatch
     )
     this.instance.interceptors.response.use(
+      //在2xx范围内的任何状态代码都会触发此函数，这里主要用于处理响应数据
       this.interceptors?.responseInterceptor,
+      //任何超出2xx范围的状态码都会触发此函数，这里主要用于处理响应错误
       this.interceptors?.responseInterceptorCatch
     )
 
@@ -72,18 +74,20 @@ class Request {
     }
 
     return new Promise((resolve, reject) => {
-      this.instance
-        .request<any, ResultData<T>>(config)
-        .then((res) => {
-          console.log(res)
+      this.instance.request<any, ResultData<T>>(config).then((res) => {
+        console.log(res)
+        if (res.code === 0) {
           resolve(res.data)
-          this.showLoading = true
-        })
-        .catch((err) => {
-          console.log('服务器未响应')
-          reject(err)
-          this.showLoading = true
-        })
+        } else {
+          reject(res.data)
+        }
+        this.showLoading = true
+      })
+      // .catch((err) => {
+      //   console.log('实在不知道该怎么触发')
+      //   reject(err)
+      //   this.showLoading = true
+      // })
     })
   }
 

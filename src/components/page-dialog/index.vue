@@ -61,7 +61,7 @@ const systemStore = useSystemStore()
 const dialogVisible = ref(false)
 
 const formRef = ref<InstanceType<typeof Form>>()
-//TODO dialog confirm
+
 const handleConfirmClick = () => {
   //调用表单验证
   formRef.value?.elFormRef?.validate((valid: boolean) => {
@@ -81,11 +81,11 @@ const handleConfirmClick = () => {
           newData: { ...formData.value }
         })
       }
+      dialogVisible.value = false
     } else {
       return false
     }
   })
-  dialogVisible.value = false
 }
 defineExpose({
   dialogVisible

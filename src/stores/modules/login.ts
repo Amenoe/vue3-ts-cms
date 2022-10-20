@@ -29,7 +29,6 @@ const useLoginStore = defineStore('login', {
     async accountLoginRequestAction(loginInfo: IAccount) {
       //1. 实现登录逻辑
       const loginResult = await accountLoginRequest(loginInfo)
-      console.log(loginResult)
       const { id, token } = loginResult
       //取出token并保存
       this.token = token
@@ -40,7 +39,6 @@ const useLoginStore = defineStore('login', {
       const userInfo = userInfoResult
       this.userInfo = userInfo
       localCache.setCache('userInfo', userInfo)
-      console.log(userInfoResult)
 
       //3. 请求用户的菜单
       const userMenusResult = await getUserMenus(userInfo.role.id)

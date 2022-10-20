@@ -18,5 +18,5 @@ export interface RequestConfig extends AxiosRequestConfig {
 
 export interface ResultData<T> {
   data: T
-  returnCode: string
+  code: number
 }

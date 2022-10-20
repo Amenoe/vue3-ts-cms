@@ -64,15 +64,10 @@ const loginAction = (rememberPsw: boolean) => {
 
       //2. 开始登录验证
       const loginStore = useLoginStore()
-      loginStore
-        .accountLoginRequestAction(loginForm.value)
-        .then(() => {
-          router.push('/main')
-          ElMessage.success('登录成功')
-        })
-        .catch(() => {
-          ElMessage.error('登录失败')
-        })
+      loginStore.accountLoginRequestAction(loginForm.value).then(() => {
+        router.push('/main')
+        ElMessage.success('登录成功')
+      })
     }
   })
 }
