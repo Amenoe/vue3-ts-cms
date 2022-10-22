@@ -20,7 +20,6 @@ const request = new Request({
     },
     responseInterceptor: (res) => {
       if (res.data.code === 0) {
-        console.log('请求成功')
         return res.data
       } else {
         //这里是服务器返回的错误代码

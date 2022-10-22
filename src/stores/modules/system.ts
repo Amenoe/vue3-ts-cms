@@ -6,6 +6,7 @@ import {
   editPageData
 } from '@/service/main/system/system'
 import type { IDeletePageDataPayload, IGetPageListPayload } from '../type'
+import useInformationStore from './information'
 //系统模块store,还包括了故事和商品信息
 const useSystemStore = defineStore('system', {
   state: () => {
@@ -59,6 +60,10 @@ const useSystemStore = defineStore('system', {
         case 'menu':
           this.menuList = list
           break
+        case 'department':
+          this.departmentList = list
+          this.departmentTotalCount = totalCount
+          break
         case 'goods':
           this.goodsList = list
           this.goodsTotalCount = totalCount
@@ -73,6 +78,10 @@ const useSystemStore = defineStore('system', {
       //发送删除的网络请求
       await deletePageData(pageUrl).then(() => {
         ElMessage.success('删除成功')
+        //成功后刷新全局缓存的数据
+        if (pageName === 'department' || pageName === 'role') {
+          useInformationStore().getInitDataAction()
+        }
       })
       //重新请求数据
       this.getPageListAction({
@@ -90,6 +99,10 @@ const useSystemStore = defineStore('system', {
       const pageUrl = `${pageName}`
       await createPageData(pageUrl, newData).then(() => {
         ElMessage.success('添加成功')
+        //成功后刷新全局缓存的数据
+        if (pageName === 'department' || pageName === 'role') {
+          useInformationStore().getInitDataAction()
+        }
       })
       //创建后重新请求数据
       this.getPageListAction({
@@ -107,6 +120,10 @@ const useSystemStore = defineStore('system', {
       const pageUrl = `${pageName}/${id}`
       await editPageData(pageUrl, editData).then(() => {
         ElMessage.success('编辑成功')
+        //成功后刷新全局缓存的数据
+        if (pageName === 'department' || pageName === 'role') {
+          useInformationStore().getInitDataAction()
+        }
       })
       //创建后重新请求数据
       this.getPageListAction({

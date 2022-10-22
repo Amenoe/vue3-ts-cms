@@ -70,10 +70,11 @@ const handleFoldClick = () => {
   emit('foldChange', isFold.value)
 }
 
+//登出事件
 const logout = () => {
   useMessageBox('确定注销并退出系统吗', '警告')
     .then(() => {
-      localCache.clearCache()
+      localCache.delCache('token')
       router.push('/main')
       ElMessage.success('退出成功')
     })

@@ -101,7 +101,10 @@ const isQuery = usePermission(props.pageName, 'query')
 
 //调用pinia中的网络请求
 const getPageData = (queryInfo: any = {}) => {
-  if (!isQuery) return
+  if (!isQuery) {
+    ElMessage.warning('该用户没有查询权限')
+    return
+  }
   systemStore.getPageListAction({
     // pageUrl: 'users/list',
     pageName: props.pageName,

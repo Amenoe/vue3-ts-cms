@@ -8,7 +8,12 @@ export function getPageList(pageUrl: string, queryInfo: any) {
   })
 }
 
-//TODO returnType
+export function getPageListById(pageUrl: string) {
+  return request.get({
+    url: pageUrl
+  })
+}
+
 export function deletePageData(pageUrl: string) {
   return request.delete<IDataType>({
     url: pageUrl

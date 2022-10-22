@@ -9,6 +9,7 @@ import type { IAccount, IMenu } from '../type'
 import router from '@/router'
 
 import { mapMenuToRoutes, mapMenuToPermissions } from '@/utils/map-menus'
+import useInformationStore from './information'
 
 const useLoginStore = defineStore('login', {
   state: (): {
@@ -42,6 +43,8 @@ const useLoginStore = defineStore('login', {
 
       //3. 请求用户的菜单
       const userMenusResult = await getUserMenus(userInfo.role.id)
+      console.log(userInfo.role.id)
+      console.log(userMenusResult)
       const userMenus = userMenusResult
       this.userMenus = userMenus
       localCache.setCache('userMenus', userMenus)
@@ -58,6 +61,8 @@ const useLoginStore = defineStore('login', {
       const token = localCache.getCache('token')
       if (token) {
         this.token = token
+        //初始化部门和角色列表
+        useInformationStore().getInitDataAction()
       }
       const userInfo = localCache.getCache('userInfo')
       if (userInfo) {

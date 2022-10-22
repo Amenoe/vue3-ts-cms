@@ -2,6 +2,7 @@ import axios from 'axios'
 import type { AxiosInstance } from 'axios'
 import type { RequestConfig, RequestInterceptors, ResultData } from './types'
 
+//TODO ElLogin无效
 const DEFAULT_LOADING = true
 
 //通过类来封装，有更强的封装性
@@ -55,7 +56,6 @@ class Request {
 
     this.instance.interceptors.response.use(
       (res) => {
-        //TODO 网络失败判断
         //请求到数据将loading移除
         this.loadingInstance?.close()
         return res

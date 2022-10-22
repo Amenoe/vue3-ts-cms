@@ -1,10 +1,5 @@
 <template>
   <div class="menu">
-    <SearchForm
-      :search-form-config="searchFormConfig"
-      @resetClick="resetClick"
-      @searchClick="searchClick"
-    ></SearchForm>
     <PageTable
       :page-table-config="pageTableConfig"
       :page-name="pageName"
@@ -30,34 +25,8 @@
 
 <script setup lang="ts">
 import PageTable from '@/components/page-table/index.vue'
-import SearchForm from '@/components/search-form/index.vue'
 
-import type { ISearchForm } from '@/baseui/form/type'
 import type { IPageTable } from '@/baseui/table/type'
-import { usePageSearch } from '@/hooks/usePageSearch'
-
-//搜索组件的配置
-const searchFormConfig: ISearchForm = {
-  formItems: [
-    {
-      field: 'name',
-      label: '菜单名称',
-      type: 'input',
-      placeholder: '请输入菜单名称'
-    },
-    {
-      field: 'type',
-      type: 'select',
-      label: '菜单状态',
-      placeholder: '请选择菜单状态',
-      options: [
-        { label: '启用', value: 1 },
-        { label: '禁用', value: 0 }
-      ]
-    }
-  ],
-  labelWidth: '100px'
-}
 
 //列表的配置
 const pageName = 'menu'
@@ -87,8 +56,6 @@ const pageTableConfig: IPageTable = {
   showSelectColumn: false,
   showFooter: false
 }
-
-const { pageTableRef, resetClick, searchClick } = usePageSearch()
 </script>
 
 <style scoped lang="less"></style>

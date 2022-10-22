@@ -135,7 +135,8 @@ const dialogFormConfig: ISearchForm = {
       field: 'realname',
       label: '真实姓名',
       type: 'input',
-      placeholder: '请输入真实姓名'
+      placeholder: '请输入真实姓名',
+      rules: [{ required: true, message: '姓名不能为空', trigger: 'blur' }]
     },
     {
       field: 'password',
@@ -150,10 +151,11 @@ const dialogFormConfig: ISearchForm = {
       label: '电话号码',
       placeholder: '请输入电话号码',
       rules: [
+        { required: true, message: '电话号码不能为空', trigger: 'blur' },
         {
           pattern: /^1[0-9]{10}$/,
           message: '请输入正确的手机号',
-          trigger: 'blur'
+          trigger: 'change'
         }
       ],
       otherOptions: {
@@ -165,6 +167,7 @@ const dialogFormConfig: ISearchForm = {
       type: 'select',
       label: '选择部门',
       placeholder: '请选择部门',
+      rules: [{ required: true }],
       options: []
     },
     {
@@ -172,6 +175,7 @@ const dialogFormConfig: ISearchForm = {
       type: 'select',
       label: '选择角色',
       placeholder: '请选择角色',
+      rules: [{ required: true }],
       options: []
     }
   ],
@@ -202,7 +206,7 @@ const dialogFormConfigRef = computed(() => {
 
 //dialog相关hook
 const newCallBack = () => {
-  dialogTitle.value = '新建用户'
+  dialogTitle.value = '新增用户'
   const passwordItem = dialogFormConfig.formItems.find(
     (item) => item.field === 'password'
   )
