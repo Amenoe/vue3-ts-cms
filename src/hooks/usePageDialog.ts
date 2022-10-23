@@ -1,6 +1,6 @@
 import type PageDialog from '@/components/page-dialog/index.vue'
 
-type CallBackFn = () => void
+type CallBackFn = (item?: any) => void
 
 export function usePageDialog(
   newCallBack?: CallBackFn,
@@ -11,7 +11,7 @@ export function usePageDialog(
   //默认的dialog数据
   const defaultInfo = ref({})
 
-  //新增事件和编辑事件
+  //新增和编辑事件
   const handleNewClick = () => {
     defaultInfo.value = {}
     if (pageDialogRef.value) {
@@ -22,10 +22,11 @@ export function usePageDialog(
 
   const handleEditClick = (item: any) => {
     defaultInfo.value = { ...item }
+
     if (pageDialogRef.value) {
       pageDialogRef.value.dialogVisible = true
     }
-    editCallBack && editCallBack()
+    editCallBack && editCallBack(item)
   }
   return { pageDialogRef, defaultInfo, handleNewClick, handleEditClick }
 }

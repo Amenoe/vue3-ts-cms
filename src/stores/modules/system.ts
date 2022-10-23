@@ -44,6 +44,8 @@ const useSystemStore = defineStore('system', {
     //获取页面数据
     async getPageListAction(payload: IGetPageListPayload) {
       const { pageName, queryInfo } = payload
+      //TODO will delete
+      console.log(queryInfo)
       //发送网络请求
       const pageResult = await getPageList(`${pageName}/list`, queryInfo)
       //保存数据到state中

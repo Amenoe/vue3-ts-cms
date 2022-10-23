@@ -99,12 +99,16 @@ const isUpdate = usePermission(props.pageName, 'update')
 const isDelete = usePermission(props.pageName, 'delete')
 const isQuery = usePermission(props.pageName, 'query')
 
+//保存搜索信息
+const searchInfo = ref({})
+
 //调用pinia中的网络请求
-const getPageData = (queryInfo: any = {}) => {
+const getPageData = (queryInfo: any = searchInfo.value) => {
   if (!isQuery) {
     ElMessage.warning('该用户没有查询权限')
     return
   }
+  searchInfo.value = queryInfo
   systemStore.getPageListAction({
     // pageUrl: 'users/list',
     pageName: props.pageName,
@@ -147,9 +151,9 @@ const handleRefresh = () => {
 const handleEditClick = (item: any) => {
   emits('EditClick', item)
 }
-//点击删除
+//点击删除（其实也可以发送给父组件处理）
 const handleDeleteClick = (item: any) => {
-  useMessageBox('确定要删除该用户吗', '警告').then(() => {
+  useMessageBox('确定要删除该数据吗', '警告').then(() => {
     systemStore.deletePageDataAction({
       pageName: props.pageName,
       id: item.id

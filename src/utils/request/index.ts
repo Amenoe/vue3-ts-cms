@@ -3,7 +3,7 @@ import type { AxiosInstance } from 'axios'
 import type { RequestConfig, RequestInterceptors, ResultData } from './types'
 
 //TODO ElLogin无效
-const DEFAULT_LOADING = true
+const DEFAULT_LOADING = false
 
 //通过类来封装，有更强的封装性
 class Request {
@@ -16,7 +16,7 @@ class Request {
   constructor(config: RequestConfig) {
     this.instance = axios.create(config) //创建axios实例
     this.interceptors = config.interceptors //保存实例的拦截器
-    this.showLoading = config.showLoading ?? DEFAULT_LOADING //创建实例的时候，如果没有传入showLoading，默认开启
+    this.showLoading = config.showLoading ?? DEFAULT_LOADING //创建实例的时候，如果没有传入showLoading，默认关闭
 
     this.setupInterceptor()
   }
@@ -69,8 +69,8 @@ class Request {
 
   //发送网络请求的方法
   request<T = any>(config: RequestConfig): Promise<T> {
-    if (!config.showLoading) {
-      this.showLoading = false
+    if (config.showLoading) {
+      this.showLoading = true
     }
 
     return new Promise((resolve, reject) => {
@@ -81,7 +81,7 @@ class Request {
         } else {
           reject(res.data)
         }
-        this.showLoading = true
+        this.showLoading = false
       })
       // .catch((err) => {
       //   console.log('实在不知道该怎么触发')

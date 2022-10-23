@@ -8,6 +8,7 @@
       destroy-on-close
     >
       <Form v-bind="dialogFormConfig" v-model="formData" ref="formRef"></Form>
+      <slot></slot>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
@@ -40,6 +41,10 @@ const props = defineProps({
   pageName: {
     type: String,
     required: true
+  },
+  otherInfo: {
+    type: Object,
+    default: () => ({})
   }
 })
 
@@ -71,14 +76,14 @@ const handleConfirmClick = () => {
         //编辑
         systemStore.editPageDataAction({
           pageName: props.pageName,
-          editData: { ...formData.value },
+          editData: { ...formData.value, ...props.otherInfo },
           id: props.defaultInfo.id
         })
       } else {
         //新建
         systemStore.createPageDataAction({
           pageName: props.pageName,
-          newData: { ...formData.value }
+          newData: { ...formData.value, ...props.otherInfo }
         })
       }
       dialogVisible.value = false

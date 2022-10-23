@@ -107,7 +107,12 @@ const pageSize = ref(props.page.pageSize)
 const currentPage = ref(props.page.currentPage)
 
 //通过watch监听分页器数据的变化
-watch([pageSize, currentPage], ([pageSize, currentPage]) => {
+watch([pageSize, currentPage], ([pageSize, currentPage], [oldSize]) => {
+  console.log(pageSize, oldSize)
+  //判断如果是页面大小发生了改变，将当前页面改为
+  if (pageSize !== oldSize) {
+    currentPage = 1
+  }
   emit('update:page', { ...props.page, pageSize, currentPage })
 })
 

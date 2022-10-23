@@ -6,7 +6,7 @@ export function usePageSearch() {
 
   //处理子组件的重置和搜索事件
   const resetClick = () => {
-    pageTableRef.value?.getPageData()
+    pageTableRef.value?.getPageData({})
   }
   const searchClick = (queryInfo: any) => {
     pageTableRef.value?.getPageData(queryInfo)

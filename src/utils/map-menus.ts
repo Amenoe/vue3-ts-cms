@@ -91,4 +91,20 @@ export function mapMenuToPermissions(userMenus: IMenu[] | IMenuChild[]) {
   return permissions
 }
 
+//获取菜单中的叶子节点
+export function getMenuLeafKeys(menuList: any[]) {
+  const leftKeys: number[] = []
+  const getLeafKeys = (menuList: any[]) => {
+    for (const menu of menuList) {
+      if (menu.children) {
+        getLeafKeys(menu.children)
+      } else {
+        leftKeys.push(menu.id)
+      }
+    }
+  }
+  getLeafKeys(menuList)
+  return leftKeys
+}
+
 export { firstMenu, firstRoute }

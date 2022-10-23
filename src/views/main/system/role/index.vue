@@ -17,10 +17,22 @@
     <PageDialog
       :dialog-form-config="dialogFormConfig"
       :default-info="defaultInfo"
+      :other-info="otherInfo"
       :dialog-title="dialogTitle"
       :page-name="pageName"
       ref="pageDialogRef"
-    ></PageDialog>
+    >
+      <div class="menu-tree">
+        <el-tree
+          :data="menus"
+          show-checkbox
+          node-key="id"
+          :props="defaultProps"
+          :default-checked-keys="defaultCheckedKeys"
+          @check="handleCheck"
+        />
+      </div>
+    </PageDialog>
   </div>
 </template>
 
@@ -30,6 +42,9 @@ import type { IPageTable } from '@/baseui/table/type'
 
 import { usePageSearch } from '@/hooks/usePageSearch'
 import { usePageDialog } from '@/hooks/usePageDialog'
+
+import useInformationStore from '@/stores/modules/information'
+import { getMenuLeafKeys } from '@/utils/map-menus'
 
 //搜索组件的配置
 const searchFormConfig: ISearchForm = {
@@ -120,14 +135,41 @@ const newCallBack = () => {
   dialogTitle.value = '新增角色'
 }
 
-const editCallBack = () => {
+const editCallBack = (item: any) => {
   dialogTitle.value = '编辑角色'
+  const leafKeys = getMenuLeafKeys(item.menuList)
+  console.log(leafKeys)
+  ;(defaultCheckedKeys.value as any) = leafKeys
 }
 
-//调用hooks中的公共函数
+//对话框插槽
+const informationStore = useInformationStore()
+
+const menus = computed(() => informationStore.entireMenu)
+const defaultProps = {
+  children: 'children',
+  label: 'name'
+}
+
+const otherInfo = ref({}) //除了form的其他表单数据
+const defaultCheckedKeys = ref([]) //tree的默认选中
+
+//第一个参数是tree的全部数组，第二个参数是数选中的对象
+const handleCheck = (data1: any, data2: any) => {
+  const checkedKeys = data2.checkedKeys //选中键数组
+  const halfCheckedKeys = data2.halfCheckedKeys //半选中键数组
+  const menuList = [...checkedKeys, ...halfCheckedKeys]
+  otherInfo.value = { menuList }
+}
+
+//调用hooks中的公共函数并传入两个函数
 const { pageTableRef, resetClick, searchClick } = usePageSearch()
 const { pageDialogRef, defaultInfo, handleNewClick, handleEditClick } =
   usePageDialog(newCallBack, editCallBack)
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.menu-tree {
+  margin-left: 10%;
+}
+</style>
