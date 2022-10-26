@@ -17,11 +17,7 @@
                 enter-from-class="fade-transform-enter"
               >
                 <keep-alive>
-                  <component
-                    :is="Component"
-                    :key="route.path"
-                    v-if="!route.meta.link"
-                  ></component>
+                  <component :is="Component" :key="route.path"></component>
                 </keep-alive>
               </transition>
             </router-view>

@@ -47,7 +47,7 @@ const useSystemStore = defineStore('system', {
       //TODO will delete
       console.log(queryInfo)
       //发送网络请求
-      const pageResult = await getPageList(`${pageName}/list`, queryInfo)
+      const pageResult = await getPageList(`/${pageName}/list`, queryInfo)
       //保存数据到state中
       const { list, totalCount } = pageResult
       switch (pageName) {
@@ -98,7 +98,7 @@ const useSystemStore = defineStore('system', {
     //新增的网络请求
     async createPageDataAction(payload: any) {
       const { pageName, newData } = payload
-      const pageUrl = `${pageName}`
+      const pageUrl = `/${pageName}`
       await createPageData(pageUrl, newData).then(() => {
         ElMessage.success('添加成功')
         //成功后刷新全局缓存的数据
@@ -119,7 +119,7 @@ const useSystemStore = defineStore('system', {
     //编辑的网络请求
     async editPageDataAction(payload: any) {
       const { pageName, editData, id } = payload
-      const pageUrl = `${pageName}/${id}`
+      const pageUrl = `/${pageName}/${id}`
       await editPageData(pageUrl, editData).then(() => {
         ElMessage.success('编辑成功')
         //成功后刷新全局缓存的数据

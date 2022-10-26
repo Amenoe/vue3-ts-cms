@@ -133,12 +133,12 @@ const dialogFormConfig: ISearchForm = {
 //dialog相关hook
 const newCallBack = () => {
   dialogTitle.value = '新增角色'
+  defaultCheckedKeys.value = []
 }
 
 const editCallBack = (item: any) => {
   dialogTitle.value = '编辑角色'
   const leafKeys = getMenuLeafKeys(item.menuList)
-  console.log(leafKeys)
   ;(defaultCheckedKeys.value as any) = leafKeys
 }
 

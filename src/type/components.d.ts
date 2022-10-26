@@ -7,11 +7,13 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    BarEchart: typeof import('./../components/page-echarts/src/BarEchart.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCard: typeof import('element-plus/es')['ElCard']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
@@ -43,10 +45,14 @@ declare module '@vue/runtime-core' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTree: typeof import('element-plus/es')['ElTree']
+    LineEchart: typeof import('./../components/page-echarts/src/LineEchart.vue')['default']
+    MapEchart: typeof import('./../components/page-echarts/src/MapEchart.vue')['default']
     NavHeader: typeof import('./../components/nav-header/index.vue')['default']
     NavMenu: typeof import('./../components/nav-menu/index.vue')['default']
     PageDialog: typeof import('./../components/page-dialog/index.vue')['default']
     PageTable: typeof import('./../components/page-table/index.vue')['default']
+    PieEchart: typeof import('./../components/page-echarts/src/PieEchart.vue')['default']
+    RoseEchart: typeof import('./../components/page-echarts/src/RoseEchart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchForm: typeof import('./../components/search-form/index.vue')['default']

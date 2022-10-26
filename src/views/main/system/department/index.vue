@@ -104,7 +104,7 @@ const dialogFormConfig: ISearchForm = {
       type: 'select',
       label: '上级部门',
       placeholder: '请选择上级部门',
-      rules: [{ required: true }],
+      rules: [{ required: true, message: '部门名称不能为空' }],
       options: []
     },
     {
@@ -112,7 +112,7 @@ const dialogFormConfig: ISearchForm = {
       label: '领导名称',
       type: 'input',
       placeholder: '请输入部门领导',
-      rules: [{ required: true }]
+      rules: [{ required: true, message: '领名称不能为空', trigger: 'blur' }]
     }
   ],
   colLayout: { span: 24 },
