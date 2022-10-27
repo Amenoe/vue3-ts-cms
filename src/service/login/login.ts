@@ -4,8 +4,8 @@ import type { Account, LoginInfo } from '../types'
 
 enum LoginAPI {
   AccountLogin = '/login',
-  UserInfo = '/users',
-  UserMenus = '/role'
+  UserInfo = '/users/',
+  UserMenus = '/role/'
 }
 
 //用户登录

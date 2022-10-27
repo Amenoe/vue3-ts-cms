@@ -48,7 +48,7 @@ const options = computed<EChartsOption>(() => {
     //地理编码
     geo: {
       map: 'china',
-      roam: 'scale',
+      roam: true, //是否开启地图缩放和拖拽
       emphasis: {
         areaColor: '#f4cccc',
         borderColor: 'rgb(9, 54, 95)',
