@@ -15,6 +15,7 @@
     "@element-plus/icons-vue": "^2.0.9",
     "axios": "^0.27.2",
     "dayjs": "^1.11.5",
+    "echarts": "^5.4.0",
     "element-plus": "^2.2.14",
     "jsencrypt": "^3.2.1",
     "normalize.css": "^8.0.1",

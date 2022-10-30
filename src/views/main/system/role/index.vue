@@ -37,98 +37,19 @@
 </template>
 
 <script setup lang="ts">
-import type { ISearchForm } from '@/baseui/form/type'
-import type { IPageTable } from '@/baseui/table/type'
-
 import { usePageSearch } from '@/hooks/usePageSearch'
 import { usePageDialog } from '@/hooks/usePageDialog'
+
+import { searchFormConfig } from './config/SearchFormConfig'
+import { pageTableConfig } from './config/PageTableConfig'
+import { dialogFormConfig } from './config/DialogFormConfig'
 
 import useInformationStore from '@/stores/modules/information'
 import { getMenuLeafKeys } from '@/utils/map-menus'
 
-//搜索组件的配置
-const searchFormConfig: ISearchForm = {
-  formItems: [
-    {
-      field: 'id',
-      label: 'id',
-      type: 'input',
-      placeholder: '请输入id'
-    },
-    {
-      field: 'name',
-      label: '角色名称',
-      type: 'input',
-      placeholder: '请输入用户名'
-    },
-    {
-      field: 'createAt',
-      label: '创建时间',
-      type: 'datepicker',
-      otherOptions: {
-        startPlaceholder: '开始时间',
-        endPlaceholder: '结束时间',
-        type: 'daterange'
-      }
-    }
-  ],
-  labelWidth: '100px'
-}
-
-//列表的配置
 const pageName = 'role'
-const pageTableConfig: IPageTable = {
-  title: '角色列表',
-  propList: [
-    { prop: 'name', label: '角色名', minWidth: '100' },
-    { prop: 'intro', label: '角色描述', minWidth: '100' },
 
-    {
-      prop: 'createAt',
-      label: '创建时间',
-      minWidth: '200',
-      slotName: 'createAt'
-    },
-    {
-      prop: 'updateAt',
-      label: '更新时间',
-      minWidth: '200',
-      slotName: 'updateAt'
-    },
-    { label: '操作', minWidth: '150', slotName: 'handler' }
-  ],
-  showIndexColumn: true,
-  showSelectColumn: false
-}
-
-//对话框表单配置
 const dialogTitle = ref('')
-const dialogFormConfig: ISearchForm = {
-  formItems: [
-    {
-      field: 'name',
-      label: '角色名称',
-      type: 'input',
-      placeholder: '请输入角色名称',
-      rules: [
-        {
-          required: true,
-          message: '角色名不能为空',
-          trigger: 'blur'
-        }
-      ]
-    },
-    {
-      field: 'intro',
-      label: '角色描述',
-      type: 'input',
-      placeholder: '请输入角色描述'
-    }
-    //TODO 添加权限分配
-  ],
-  colLayout: { span: 24 },
-  itemStyle: { padding: '5px 0px' }
-}
 
 //dialog相关hook
 const newCallBack = () => {

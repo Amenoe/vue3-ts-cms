@@ -2,7 +2,7 @@
   <el-card class="card">
     <template #header>
       <div class="card-header">
-        <span>{{ title }}</span>
+        <span class="card-header-title">{{ title }}</span>
         <slot name="header"></slot>
       </div>
     </template>
@@ -31,6 +31,10 @@ defineProps({
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    &-title {
+      font-weight: 700;
+    }
   }
   &-content {
     margin-bottom: 10px;
