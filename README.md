@@ -1,8 +1,9 @@
 # RainCMS
 
 - 基于 Vue 3 + TypeScript + Vite 的后台管理系统
-- 根据 coderwhy 老师的课程编写
-- 是个人的练习项目
+- 根据 coderwhy 老师的课程编写，并进行升级优化
+- 封装多种表单，列表等通用组件，提升开发效率
+- 是个人的Vue3练习项目
 
 ## 前端工程化
 
@@ -15,6 +16,12 @@
 - pinia `^2.0.20`
 - axios `^0.27.2`
 - element-plus `^2.2.14`
+
+## 界面截图
+![QQ截图20230210162451](https://gcore.jsdelivr.net/gh/Amenoe/image-hosting/Other/QQ%E6%88%AA%E5%9B%BE20230210162451.png)
+![QQ截图20230210162500](https://gcore.jsdelivr.net/gh/Amenoe/image-hosting/Other/QQ%E6%88%AA%E5%9B%BE20230210162500.png)
+![QQ截图20230210162513](https://gcore.jsdelivr.net/gh/Amenoe/image-hosting/Other/QQ%E6%88%AA%E5%9B%BE20230210162513.png)
+![QQ截图20230210162556](https://gcore.jsdelivr.net/gh/Amenoe/image-hosting/Other/QQ%E6%88%AA%E5%9B%BE20230210162556.png)
 
 ## 碎碎念 x
 
