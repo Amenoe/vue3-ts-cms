@@ -1,7 +1,6 @@
 # RainCMS
 
 - 基于 Vue 3 + TypeScript + Vite 的后台管理系统
-- 根据 coderwhy 老师的课程编写，并进行升级优化
 - 封装多种表单，列表等通用组件，提升开发效率
 - 是个人的Vue3练习项目
 
