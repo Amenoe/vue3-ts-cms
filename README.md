@@ -17,10 +17,10 @@
 - element-plus `^2.2.14`
 
 ## 界面截图
-![QQ截图20230210162451](https://gcore.jsdelivr.net/gh/Amenoe/image-hosting/Other/QQ%E6%88%AA%E5%9B%BE20230210162451.png)
-![QQ截图20230210162500](https://gcore.jsdelivr.net/gh/Amenoe/image-hosting/Other/QQ%E6%88%AA%E5%9B%BE20230210162500.png)
-![QQ截图20230210162513](https://gcore.jsdelivr.net/gh/Amenoe/image-hosting/Other/QQ%E6%88%AA%E5%9B%BE20230210162513.png)
-![QQ截图20230210162556](https://gcore.jsdelivr.net/gh/Amenoe/image-hosting/Other/QQ%E6%88%AA%E5%9B%BE20230210162556.png)
+![QQ截图20230210162451](https://cdn.jsdelivr.net/gh/Amenoe/image-hosting/Other/QQ%E6%88%AA%E5%9B%BE20230210162451.png)
+![QQ截图20230210162500](https://cdn.jsdelivr.net/gh/Amenoe/image-hosting/Other/QQ%E6%88%AA%E5%9B%BE20230210162500.png)
+![QQ截图20230210162513](https://cdn.jsdelivr.net/gh/Amenoe/image-hosting/Other/QQ%E6%88%AA%E5%9B%BE20230210162513.png)
+![QQ截图20230210162556](https://cdn.jsdelivr.net/gh/Amenoe/image-hosting/Other/QQ%E6%88%AA%E5%9B%BE20230210162556.png)
 
 ## 碎碎念 x
 
